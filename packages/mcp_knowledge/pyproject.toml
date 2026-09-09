@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=81", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nxp-mcp-knowledge"
+version = "1.0.0"
+description = "Knowledge base MCP server with vector search powered by LanceDB"
+requires-python = ">=3.11"
+dependencies = [
+  "nxp-mcp-shared==1.0.0",
+  "fastmcp==3.3.1",
+  "pyyaml==6.0.3",
+  "lancedb==0.30.2",
+  "sentence-transformers==5.5.1",
+  "beautifulsoup4==4.14.3",
+  "pyarrow==24.0.0",
+  "pymupdf==1.27.2.3",
+  "pytesseract==0.3.13",
+]
+
+[tool.setuptools]
+package-dir = {"nxp.mcp.knowledge" = "src"}
+
+packages = [
+  "nxp.mcp.knowledge",
+  "nxp.mcp.knowledge.config",
+  "nxp.mcp.knowledge.metadata",
+  "nxp.mcp.knowledge.server",
+  "nxp.mcp.knowledge.tools",
+  "nxp.mcp.knowledge.resources",
+  "nxp.mcp.knowledge.prompts",
+  "nxp.mcp.knowledge.db",
+  "nxp.mcp.knowledge.embeddings",
+  "nxp.mcp.knowledge.ingestion",
+  "nxp.mcp.knowledge.ingestion.parsers",
+  "nxp.mcp.knowledge.reranking",
+]
+
+[project.scripts]
+nxp-mcp-knowledge = "nxp.mcp.knowledge.main:main"
+
+[project.entry-points."nxp.mcp.servers"]
+knowledge = "nxp.mcp.knowledge"

@@ -1,0 +1,9 @@
+fastmcp>=2.0.0
+fastapi>=0.115.0
+uvicorn>=0.30.0
+pydantic>=2.7.0
+numpy>=1.26.0
+pillow>=10.0.0
+opencv-python>=4.9.0.80
+faiss-cpu>=1.8.0
+scikit-learn>=1.4.0

@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=81", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nxp-mcp-gateway"
+version = "1.0.0"
+description = "Root gateway MCP server that mounts and composes component servers"
+requires-python = ">=3.11"
+dependencies = [
+  "nxp-mcp-shared==1.0.0",
+  "fastmcp==3.3.1",
+  "pyyaml==6.0.3",
+]
+
+[project.scripts]
+nxp-mcp-gateway = "nxp.mcp.gateway.main:main"
+
+[project.entry-points."nxp.mcp.servers"]
+gateway = "nxp.mcp.gateway"
+
+[tool.setuptools]
+package-dir = {"nxp.mcp.gateway" = "src"}
+
+packages = [
+  "nxp.mcp.gateway",
+  "nxp.mcp.gateway.config",
+  "nxp.mcp.gateway.metadata",
+  "nxp.mcp.gateway.mounting",
+  "nxp.mcp.gateway.registry",
+  "nxp.mcp.gateway.runtime",
+  "nxp.mcp.gateway.server",
+]

@@ -1,0 +1,11 @@
+logging:
+  level: DEBUG
+  timestamp_format: "%Y-%m-%d %H:%M:%S"    # strftime format for %(asctime)s
+  format: "%(asctime)s [%(name)s] %(levelname)s %(message)s"    # standard Python logging format string
+  file: ../.tmp/logs/freemaster.log         # optional - omit for stderr only
+
+settings:
+  ws_host: "localhost"
+  ws_port: 8090
+
+skills: ../skills/freemaster

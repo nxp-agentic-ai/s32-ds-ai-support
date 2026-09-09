@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=81", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nxp-mcp-s32ds"
+version = "1.0.0"
+description = """
+An MCP server that gives AI assistants deep, hands-on integration with NXP S32 Design Studio IDE - full IDE remote control, build, and debug.
+
+Whenever the user asks something that could be answered by the live IDE runtime - e.g. installed toolchains/compilers, SDKs, debuggers, cores, processors, workspace projects, build configs, or debug/launch configurations - follow this flow before answering: (1) call search_actions to look for a matching live IDE action; (2) if the IDE is not reachable yet, call the start_tool action to bring it up, then retry search_actions; (3) if start_tool reports status=\"failed\", tell the user the IDE could not be started so runtime data is unavailable; (4) only after exhausting the live IDE path, answer from general/training knowledge and clearly note that it is not live data from this environment.
+"""
+requires-python = ">=3.11"
+dependencies = [
+  "nxp-mcp-shared==1.0.0",
+  "fastmcp==3.3.1",
+  "pyyaml==6.0.3",
+  "httpx==0.28.1",
+]
+
+[tool.setuptools]
+package-dir = {"nxp.mcp.s32ds" = "src"}
+
+packages = [
+  "nxp.mcp.s32ds",
+  "nxp.mcp.s32ds.actions",
+  "nxp.mcp.s32ds.actions.handlers",
+  "nxp.mcp.s32ds.client",
+  "nxp.mcp.s32ds.config",
+  "nxp.mcp.s32ds.metadata",
+  "nxp.mcp.s32ds.server",
+  "nxp.mcp.s32ds.tools",
+  "nxp.mcp.s32ds.resources",
+  "nxp.mcp.s32ds.prompts",
+]
+
+[project.scripts]
+nxp-mcp-s32ds = "nxp.mcp.s32ds.main:main"
+
+[project.entry-points."nxp.mcp.servers"]
+s32ds = "nxp.mcp.s32ds"

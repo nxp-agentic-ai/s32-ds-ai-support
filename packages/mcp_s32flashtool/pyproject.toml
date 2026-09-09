@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=81", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nxp-mcp-s32flashtool"
+version = "1.0.0"
+description = "An MCP server that gives AI assistants deep, hands-on integration with NXP S32 Flash Tool - command line operations."
+requires-python = ">=3.11"
+dependencies = [
+  "nxp-mcp-shared==1.0.0",
+  "fastmcp==3.3.1",
+  "pyyaml==6.0.3",
+  "pydantic==2.13.4",
+  # Python < 3.12 needs the typing_extensions TypedDict backport so pydantic
+  # (via FastMCP) can build tool schemas. 4.12 was the documented *minimum*;
+  # the exact pin is 4.15.0 because pydantic 2.13.4 requires >=4.14.1.
+  "typing_extensions==4.15.0",
+  # PEP 440 version parsing/comparison for tool version detection
+  # (see impl/handlers/versioning.py).
+  "packaging==26.2",
+]
+
+
+[tool.setuptools]
+package-dir = {"nxp.mcp.s32flashtool" = "src"}
+packages = [
+  "nxp.mcp.s32flashtool",
+  "nxp.mcp.s32flashtool.config",
+  "nxp.mcp.s32flashtool.metadata",
+  "nxp.mcp.s32flashtool.server",
+  "nxp.mcp.s32flashtool.tools",
+  "nxp.mcp.s32flashtool.resources",
+  "nxp.mcp.s32flashtool.prompts",
+  "nxp.mcp.s32flashtool.impl",
+  "nxp.mcp.s32flashtool.impl.actions",
+  "nxp.mcp.s32flashtool.impl.handlers",
+  "nxp.mcp.s32flashtool.impl.resources",
+  "nxp.mcp.s32flashtool.impl.rpc_client",
+]
+
+[tool.setuptools.package-data]
+"nxp.mcp.s32flashtool.impl.resources" = ["*.md", "*.json"]
+
+
+
+[project.scripts]
+mcp-s32flashtool = "nxp.mcp.s32flashtool.main:main"
+
+[project.entry-points."nxp.mcp.servers"]
+s32flashtool = "nxp.mcp.s32flashtool"

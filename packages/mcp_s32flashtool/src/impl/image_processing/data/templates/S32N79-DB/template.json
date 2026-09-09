@@ -1,0 +1,39 @@
+{
+  "board_id": "BOARD_X_REV_B",
+  "revision": "B",
+  "reference_image": null,
+  "landmarks": [
+    {"name": "U1_pin1", "x": 100, "y": 80},
+    {"name": "JTAG", "x": 420, "y": 70}
+  ],
+  "regions_of_interest": [
+    {
+      "id": "SW1_1",
+      "label": "SW1.1",
+      "type": "dip_switch",
+      "bbox": {"x": 520, "y": 210, "w": 40, "h": 22},
+      "allowed_states": ["ON", "OFF"],
+      "orientation": "horizontal",
+      "notes": "First DIP position"
+    },
+    {
+      "id": "SW1_2",
+      "label": "SW1.2",
+      "type": "dip_switch",
+      "bbox": {"x": 562, "y": 210, "w": 40, "h": 22},
+      "allowed_states": ["ON", "OFF"],
+      "orientation": "horizontal"
+    },
+    {
+      "id": "JP3",
+      "label": "JP3",
+      "type": "jumper",
+      "bbox": {"x": 610, "y": 340, "w": 48, "h": 48},
+      "allowed_states": ["OPEN", "CLOSED"]
+    }
+  ],
+  "metadata": {
+    "family": "BOARD_X",
+    "camera": "top"
+  }
+}

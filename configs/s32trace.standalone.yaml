@@ -1,0 +1,14 @@
+logging:
+  level: INFO
+  timestamp_format: "%Y-%m-%d %H:%M:%S"
+  format: "%(asctime)s [%(name)s] %(levelname)s %(message)s"
+  file: ../.tmp/logs/s32trace.log
+
+settings:
+  installation_path: ""
+
+  # Reserved for future S32Trace GUI control tools.
+  rest_host: "localhost"
+  rest_port: 0
+
+skills: skills/s32trace

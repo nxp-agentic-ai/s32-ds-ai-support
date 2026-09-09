@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://board-config-mcp/schemas/board.schema.json",
+  "title": "Board Definition",
+  "type": "object",
+  "required": ["schema_version", "board_id", "name", "reference_image", "rois"],
+  "properties": {
+    "schema_version": { "type": "string" },
+    "board_id": { "type": "string" },
+    "name": { "type": "string" },
+    "reference_image": { "type": "string" },
+    "reference_annotated_image": { "type": "string" },
+    "match_mode": { "type": "string", "enum": ["feature_homography", "manual", "template_match"] },
+    "alignment_policy": {
+      "type": "object",
+      "properties": {
+        "full_board": {
+          "type": "object",
+          "properties": {
+            "min_inliers": { "type": "number", "minimum": 0 },
+            "min_score": { "type": "number", "minimum": 0, "maximum": 1 },
+            "min_inside_fraction": { "type": "number", "minimum": 0, "maximum": 1 }
+          },
+          "additionalProperties": false
+        },
+        "partial_region": {
+          "type": "object",
+          "properties": {
+            "min_inliers": { "type": "number", "minimum": 0 },
+            "min_score": { "type": "number", "minimum": 0, "maximum": 1 },
+            "min_inside_fraction": { "type": "number", "minimum": 0, "maximum": 1 }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "board_orientation_reference": { "type": "string", "enum": ["landscape", "portrait", "unknown"] },
+    "notes": { "type": "string" },
+    "rois": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

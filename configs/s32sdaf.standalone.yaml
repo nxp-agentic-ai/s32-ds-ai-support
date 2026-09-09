@@ -1,0 +1,10 @@
+logging:
+  level: DEBUG
+  timestamp_format: "%Y-%m-%d %H:%M:%S"    # strftime format for %(asctime)s
+  format: "%(asctime)s [%(name)s] %(levelname)s %(message)s"    # standard Python logging format string
+  file: ../.tmp/logs/s32sdaf.log           # optional - omit or leave empty for stderr only
+
+settings:
+  installation_path: ""  # S32SDAF install root (for example C:/NXP/SDAF)
+
+skills: ../skills/s32sdaf

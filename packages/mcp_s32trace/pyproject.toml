@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=81", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nxp-mcp-s32trace"
+version = "1.0.0"
+description = "S32Trace MCP server"
+requires-python = ">=3.11"
+dependencies = [
+  "nxp-mcp-shared==1.0.0",
+  "fastmcp==3.3.1",
+  "pyyaml==6.0.3",
+  # 2.3.3, not the old 2.0.0 floor: 2.0.0 has no cp314 wheel, so pinning it
+  # exactly breaks the install on Python 3.14 (it was a minimum, not a target).
+  "pandas==2.3.3",
+  "pyelftools==0.31",
+]
+
+[tool.setuptools]
+package-dir = {"nxp.mcp.s32trace" = "src"}
+
+packages = [
+  "nxp.mcp.s32trace",
+  "nxp.mcp.s32trace.config",
+  "nxp.mcp.s32trace.impl",
+  "nxp.mcp.s32trace.impl.analysis",
+  "nxp.mcp.s32trace.impl.common",
+  "nxp.mcp.s32trace.impl.coverage",
+  "nxp.mcp.s32trace.impl.performance",
+  "nxp.mcp.s32trace.impl.timeline",
+  "nxp.mcp.s32trace.metadata",
+  "nxp.mcp.s32trace.server",
+  "nxp.mcp.s32trace.tools",
+  "nxp.mcp.s32trace.resources",
+  "nxp.mcp.s32trace.prompts",
+  "nxp.mcp.s32trace.actions",
+  "nxp.mcp.s32trace.handlers",
+]
+
+[project.scripts]
+mcp-s32trace = "nxp.mcp.s32trace.main:main"
+
+[project.entry-points."nxp.mcp.servers"]
+s32trace = "nxp.mcp.s32trace"

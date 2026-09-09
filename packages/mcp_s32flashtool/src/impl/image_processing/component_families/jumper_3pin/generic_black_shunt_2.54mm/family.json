@@ -1,0 +1,10 @@
+{
+  "family_id": "generic_black_shunt_2.54mm",
+  "component_type": "jumper_3pin",
+  "visual_normalization": {
+    "canonical_orientation": "horizontal",
+    "pin_axis": "left_to_right"
+  },
+  "visual_states": ["ABSENT", "LEFT_PAIR", "RIGHT_PAIR"],
+  "notes": "Generic 3-pin jumper family using visual states independent of pin numbering semantics."
+}

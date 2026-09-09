@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=81", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nxp-mcp"
+version = "1.0.0"
+description = "NXP MCP Server Pack: installs all MCP sub-packages together"
+requires-python = ">=3.11"
+dependencies = [
+  "nxp-mcp-shared==1.0.0",
+  "nxp-mcp-gateway==1.0.0",
+  "nxp-mcp-knowledge==1.0.0",
+  "nxp-mcp-freemaster==1.0.0",
+  "nxp-mcp-s32ct==1.0.0",
+  "nxp-mcp-s32debugger==1.0.0",
+  "nxp-mcp-s32ds==1.0.0",
+  "nxp-mcp-s32flashtool==1.0.0",
+  "nxp-mcp-compiler==1.0.0",
+  "nxp-mcp-s32sdaf==1.0.0",
+  "nxp-mcp-s32trace==1.0.0"
+]
+
+# ---------------------------------------------------------------------------
+# Each sub-package owns its own pyproject.toml under packages/mcp_<name>/.
+# This root pyproject.toml is a convenience dev-aggregate only.
+# Entry-points ("nxp.mcp.servers") are declared in each servers's own
+# pyproject.toml so that servers can be installed independently.
+# ---------------------------------------------------------------------------
+
+[tool.setuptools]
+packages = []
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

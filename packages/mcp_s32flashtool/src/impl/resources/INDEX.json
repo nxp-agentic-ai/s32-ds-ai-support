@@ -1,0 +1,294 @@
+{
+  "$schema": "https://nxp.com/ai-tools/schemas/skill-index-v1.json",
+  "pack": "s32flashtool",
+  "version": "1.1.0",
+  "authoritative": true,
+  "load_order": [
+    "s32flashtool-agent-rules-minimal",
+    "s32flashtool-workflow-index"
+  ],
+  "routing_hints": {
+    "ambiguous_request": "s32flashtool-basic-use",
+    "board_unknown": "s32flashtool-identify-user-board",
+    "connection_unknown": "s32flashtool-discover-hardware-setup",
+    "gui_automation": "s32flashtool-rpc-api",
+    "read_only_first_preferred": [
+      "s32flashtool-get-version",
+      "s32flashtool-get-flash-id",
+      "s32flashtool-read-mcuid",
+      "s32flashtool-read-flash",
+      "s32flashtool-read-rcon",
+      "s32flashtool-compute-crc-and-compare-to-flash",
+      "s32flashtool-list-available-serial-communication-interfaces",
+      "s32flashtool-supported-devices-per-platform",
+      "s32flashtool-read-command-line-arguments"
+    ],
+    "before_destructive": [
+      "s32flashtool-identify-user-board",
+      "s32flashtool-discover-hardware-setup",
+      "s32flashtool-supported-devices-per-platform"
+    ],
+    "correctness_evidence_meta": "s32flashtool-evidence-disciplined-technical-validation"
+  },
+  "meta_skills": [
+    {
+      "name": "s32flashtool-agent-rules-minimal",
+      "role": "meta",
+      "uri": "s32flashtool/s32flashtool-agent-rules-minimal/SKILL.md"
+    },
+    {
+      "name": "s32flashtool-workflow-index",
+      "role": "routing",
+      "uri": "s32flashtool/s32flashtool-workflow-index/SKILL.md"
+    },
+    {
+      "name": "s32flashtool-evidence-disciplined-technical-validation",
+      "role": "meta",
+      "uri": "s32flashtool/s32flashtool-evidence-disciplined-technical-validation/SKILL.md"
+    }
+  ],
+  "transport_skills": [
+    {
+      "name": "s32flashtool-rpc-api",
+      "role": "transport",
+      "uri": "s32flashtool/s32flashtool-rpc-api/SKILL.md"
+    }
+  ],
+  "operations": [
+    {
+      "name": "s32flashtool-basic-use",
+      "role": "operation",
+      "modes": ["discovery"],
+      "primary_actions": {
+        "discovery": []
+      },
+      "destructive": false,
+      "read_only": true,
+      "confirmation_required": false,
+      "discovery_first": true,
+      "uri": "s32flashtool/s32flashtool-basic-use/SKILL.md"
+    },
+    {
+      "name": "s32flashtool-identify-user-board",
+      "role": "operation",
+      "modes": ["discovery"],
+      "primary_actions": {
+        "discovery": []
+      },
+      "destructive": false,
+      "read_only": true,
+      "confirmation_required": false,
+      "discovery_first": false,
+      "uri": "s32flashtool/s32flashtool-identify-user-board/SKILL.md"
+    },
+    {
+      "name": "s32flashtool-discover-hardware-setup",
+      "role": "operation",
+      "modes": ["discovery"],
+      "primary_actions": {
+        "discovery": []
+      },
+      "destructive": false,
+      "read_only": true,
+      "confirmation_required": false,
+      "discovery_first": false,
+      "uri": "s32flashtool/s32flashtool-discover-hardware-setup/SKILL.md"
+    },
+    {
+      "name": "s32flashtool-supported-devices-per-platform",
+      "role": "operation",
+      "modes": ["cli"],
+      "primary_actions": {
+        "cli": ["list_platform_files"]
+      },
+      "destructive": false,
+      "read_only": true,
+      "confirmation_required": false,
+      "discovery_first": false,
+      "uri": "s32flashtool/s32flashtool-supported-devices-per-platform/SKILL.md"
+    },
+    {
+      "name": "s32flashtool-list-available-serial-communication-interfaces",
+      "role": "operation",
+      "modes": ["cli"],
+      "primary_actions": {
+        "cli": ["cli_build_list_interfaces", "cli_execute"]
+      },
+      "destructive": false,
+      "read_only": true,
+      "confirmation_required": false,
+      "discovery_first": false,
+      "uri": "s32flashtool/s32flashtool-list-available-serial-communication-interfaces/SKILL.md"
+    },
+    {
+      "name": "s32flashtool-read-command-line-arguments",
+      "role": "operation",
+      "modes": ["cli"],
+      "primary_actions": {
+        "cli": ["cli_execute"]
+      },
+      "destructive": false,
+      "read_only": true,
+      "confirmation_required": false,
+      "discovery_first": false,
+      "uri": "s32flashtool/s32flashtool-read-command-line-arguments/SKILL.md"
+    },
+    {
+      "name": "s32flashtool-get-version",
+      "role": "operation",
+      "modes": ["discovery"],
+      "primary_actions": {
+        "discovery": ["cli_execute"]
+      },
+      "destructive": false,
+      "read_only": true,
+      "confirmation_required": false,
+      "discovery_first": false,
+      "uri": "s32flashtool/s32flashtool-get-version/SKILL.md"
+    },
+    {
+      "name": "s32flashtool-get-flash-id",
+      "role": "operation",
+      "modes": ["cli", "gui-rpc"],
+      "primary_actions": {
+        "cli": ["cli_build_fid", "cli_execute"],
+        "gui-rpc": ["gui_launch"]
+      },
+      "destructive": false,
+      "read_only": true,
+      "confirmation_required": false,
+      "discovery_first": true,
+      "companion_skills": ["s32flashtool-rpc-api"],
+      "uri": "s32flashtool/s32flashtool-get-flash-id/SKILL.md"
+    },
+    {
+      "name": "s32flashtool-read-mcuid",
+      "role": "operation",
+      "modes": ["cli"],
+      "primary_actions": {
+        "cli": ["cli_build_mcuid", "cli_execute"]
+      },
+      "destructive": false,
+      "read_only": true,
+      "confirmation_required": false,
+      "discovery_first": true,
+      "uri": "s32flashtool/s32flashtool-read-mcuid/SKILL.md"
+    },
+    {
+      "name": "s32flashtool-read-flash",
+      "role": "operation",
+      "modes": ["cli", "gui-rpc"],
+      "primary_actions": {
+        "cli": ["cli_build_fread", "cli_execute"],
+        "gui-rpc": ["gui_launch"]
+      },
+      "destructive": false,
+      "read_only": true,
+      "confirmation_required": false,
+      "discovery_first": true,
+      "companion_skills": ["s32flashtool-rpc-api"],
+      "uri": "s32flashtool/s32flashtool-read-flash/SKILL.md"
+    },
+    {
+      "name": "s32flashtool-compute-crc-and-compare-to-flash",
+      "role": "operation",
+      "modes": ["cli"],
+      "primary_actions": {
+        "cli": ["cli_build_fcrc", "cli_execute"]
+      },
+      "destructive": false,
+      "read_only": true,
+      "confirmation_required": false,
+      "discovery_first": true,
+      "uri": "s32flashtool/s32flashtool-compute-crc-and-compare-to-flash/SKILL.md"
+    },
+    {
+      "name": "s32flashtool-read-rcon",
+      "role": "operation",
+      "modes": ["cli", "gui-rpc"],
+      "primary_actions": {
+        "cli": ["cli_build_fread", "cli_execute"],
+        "gui-rpc": ["gui_launch"]
+      },
+      "destructive": false,
+      "read_only": true,
+      "confirmation_required": false,
+      "discovery_first": true,
+      "companion_skills": ["s32flashtool-rpc-api"],
+      "uri": "s32flashtool/s32flashtool-read-rcon/SKILL.md"
+    },
+    {
+      "name": "s32flashtool-sram",
+      "role": "operation",
+      "modes": ["cli", "gui-rpc"],
+      "primary_actions": {
+        "cli": ["cli_build_boot", "cli_execute"],
+        "gui-rpc": ["gui_launch"]
+      },
+      "destructive": false,
+      "read_only": false,
+      "confirmation_required": false,
+      "discovery_first": true,
+      "companion_skills": ["s32flashtool-rpc-api"],
+      "uri": "s32flashtool/s32flashtool-sram/SKILL.md"
+    },
+    {
+      "name": "s32flashtool-upload-file-to-flash",
+      "role": "operation",
+      "modes": ["cli", "gui-rpc"],
+      "primary_actions": {
+        "cli": ["cli_build_fprogram", "cli_execute"],
+        "gui-rpc": ["gui_launch"]
+      },
+      "destructive": true,
+      "read_only": false,
+      "confirmation_required": true,
+      "confirmation_phrase": "yes, program",
+      "discovery_first": true,
+      "companion_skills": ["s32flashtool-rpc-api"],
+      "validation_skills": [
+        "s32flashtool-compute-crc-and-compare-to-flash",
+        "s32flashtool-read-flash"
+      ],
+      "uri": "s32flashtool/s32flashtool-upload-file-to-flash/SKILL.md"
+    },
+    {
+      "name": "s32flashtool-erase-flash",
+      "role": "operation",
+      "modes": ["cli", "gui-rpc"],
+      "primary_actions": {
+        "cli": ["cli_build_ferase", "cli_execute"],
+        "gui-rpc": ["gui_launch"]
+      },
+      "destructive": true,
+      "read_only": false,
+      "confirmation_required": true,
+      "confirmation_phrase": "yes, erase",
+      "discovery_first": true,
+      "companion_skills": ["s32flashtool-rpc-api"],
+      "validation_skills": [
+        "s32flashtool-read-flash"
+      ],
+      "uri": "s32flashtool/s32flashtool-erase-flash/SKILL.md"
+    },
+    {
+      "name": "s32flashtool-write-rcon",
+      "role": "operation",
+      "modes": ["cli", "gui-rpc"],
+      "primary_actions": {
+        "cli": ["cli_build_fprogram", "cli_execute"],
+        "gui-rpc": ["gui_launch"]
+      },
+      "destructive": true,
+      "read_only": false,
+      "confirmation_required": true,
+      "confirmation_phrase": "yes, write",
+      "discovery_first": true,
+      "companion_skills": ["s32flashtool-rpc-api"],
+      "validation_skills": [
+        "s32flashtool-read-rcon"
+      ],
+      "uri": "s32flashtool/s32flashtool-write-rcon/SKILL.md"
+    }
+  ]
+}

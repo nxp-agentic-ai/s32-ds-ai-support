@@ -1,0 +1,34 @@
+[
+  {
+    "board_id": "SAMPLE_DATASET_BOARD",
+    "roi_id": "SW1_1",
+    "label": "SW1.1",
+    "component_type": "dip_switch",
+    "state": "ON",
+    "image_path": "C:\\Users\\nxf94919\\Documents\\mcp-server-vision\\board-config-mcp\\examples\\roi_sw1_on.png"
+  },
+  {
+    "board_id": "SAMPLE_DATASET_BOARD",
+    "roi_id": "JP3",
+    "label": "JP3",
+    "component_type": "jumper",
+    "state": "CLOSED",
+    "image_path": "C:\\Users\\nxf94919\\Documents\\mcp-server-vision\\board-config-mcp\\examples\\roi_jp3_closed.png"
+  },
+  {
+    "board_id": "SAMPLE_DATASET_BOARD",
+    "roi_id": "SW1_1",
+    "label": "SW1.1",
+    "component_type": "dip_switch",
+    "state": "ON",
+    "image_path": "C:\\Users\\nxf94919\\Documents\\mcp-server-vision\\board-config-mcp\\examples\\roi_sw1_on.png"
+  },
+  {
+    "board_id": "SAMPLE_DATASET_BOARD",
+    "roi_id": "JP3",
+    "label": "JP3",
+    "component_type": "jumper",
+    "state": "CLOSED",
+    "image_path": "C:\\Users\\nxf94919\\Documents\\mcp-server-vision\\board-config-mcp\\examples\\roi_jp3_closed.png"
+  }
+]

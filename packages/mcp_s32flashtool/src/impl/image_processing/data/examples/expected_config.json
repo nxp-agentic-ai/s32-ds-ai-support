@@ -1,0 +1,8 @@
+{
+  "board_id": "BOARD_X_REV_B",
+  "expected": {
+    "SW1.1": "ON",
+    "SW1.2": "OFF",
+    "JP3": "CLOSED"
+  }
+}

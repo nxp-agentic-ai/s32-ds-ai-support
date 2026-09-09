@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=81", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nxp-mcp-s32sdaf"
+version = "1.0.0"
+description = "S32SDAF MCP server"
+requires-python = ">=3.11"
+dependencies = [
+  "nxp-mcp-shared==1.0.0",
+  "fastmcp==3.3.1",
+  "pyyaml==6.0.3",
+]
+
+[tool.setuptools]
+package-dir = {"nxp.mcp.s32sdaf" = "src"}
+
+packages = [
+  "nxp.mcp.s32sdaf",
+  "nxp.mcp.s32sdaf.config",
+  "nxp.mcp.s32sdaf.metadata",
+  "nxp.mcp.s32sdaf.server",
+  "nxp.mcp.s32sdaf.tools",
+  "nxp.mcp.s32sdaf.resources",
+  "nxp.mcp.s32sdaf.prompts",
+  "nxp.mcp.s32sdaf.impl",
+  "nxp.mcp.s32sdaf.impl.actions",
+  "nxp.mcp.s32sdaf.impl.handlers",
+]
+
+[project.scripts]
+mcp-s32sdaf = "nxp.mcp.s32sdaf.main:main"
+
+[project.entry-points."nxp.mcp.servers"]
+s32sdaf = "nxp.mcp.s32sdaf"

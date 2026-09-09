@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "board_id": "X-S32R47-EVB-SKT",
+  "name": "X-S32R47-EVB-SKT",
+  "reference_image": "images\\R47.png",
+  "match_mode": "feature_homography",
+  "alignment_policy": {
+    "full_board": {
+      "min_inliers": 8,
+      "min_score": 0.3,
+      "min_inside_fraction": 0.7
+    },
+    "partial_region": {
+      "min_inliers": 15,
+      "min_score": 0.2,
+      "min_inside_fraction": 0.4
+    }
+  },
+  "photo_hints": [
+    "Prefer a full top-down image of the board when possible.",
+    "For partial images around ???, include nearby connectors and silkscreen so the crop is not ambiguous.",
+    "Avoid glare on the DIP switch bank and black jumper shunts.",
+    "Keep the power-supply plug side consistent with the reference orientation when practical."
+  ],
+  "board_orientation_reference": "vertical, power supply plug in the top-right corner",
+  "anchor_points": [],
+  "notes": "",
+  "rois": [
+    
+  ]
+}

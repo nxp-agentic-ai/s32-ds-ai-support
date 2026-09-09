@@ -1,0 +1,149 @@
+{
+  "schema_version": "1.0",
+  "roi_id": "ID_SW3",
+  "label": "S3",
+  "type": "dip_switch_group",
+  "reference_bbox": [
+    196,
+    89,
+    5,
+    32
+  ],
+  "orientation": "unknown",
+  "notes": "",
+  "detection": {
+    "method": "aligned_crop",
+    "rotation_invariant": true,
+    "scale_invariant": true,
+    "classification_mode": "per_switch"
+  },
+  "switch_count": 10,
+  "layout": "single_column",
+  "indexing": {
+    "position_1_at": "top",
+    "increment_direction": "top_to_bottom"
+  },
+  "state_semantics": {
+    "on_side": "left",
+    "off_side": "right"
+  },
+  "allowed_states": [
+    "ON",
+    "OFF"
+  ],
+  "expected_positions": {
+    "1": "ON",
+    "2": "ON",
+    "3": "ON",
+    "4": "ON",
+    "5": "ON",
+    "6": "ON",
+    "7": "ON",
+    "8": "ON",
+    "9": "ON",
+    "10": "ON"
+  },
+  "switch_regions": [
+    {
+      "index": 1,
+      "label": "SW.1",
+      "reference_bbox": [
+        196,
+        89,
+        5,
+        3
+      ]
+    },
+    {
+      "index": 2,
+      "label": "SW.2",
+      "reference_bbox": [
+        196,
+        92,
+        5,
+        3
+      ]
+    },
+    {
+      "index": 3,
+      "label": "SW.3",
+      "reference_bbox": [
+        196,
+        95,
+        5,
+        3
+      ]
+    },
+    {
+      "index": 4,
+      "label": "SW.4",
+      "reference_bbox": [
+        196,
+        99,
+        5,
+        3
+      ]
+    },
+    {
+      "index": 5,
+      "label": "SW.5",
+      "reference_bbox": [
+        196,
+        102,
+        5,
+        3
+      ]
+    },
+    {
+      "index": 6,
+      "label": "SW.6",
+      "reference_bbox": [
+        196,
+        105,
+        5,
+        3
+      ]
+    },
+    {
+      "index": 7,
+      "label": "SW.7",
+      "reference_bbox": [
+        196,
+        108,
+        5,
+        3
+      ]
+    },
+    {
+      "index": 8,
+      "label": "SW.8",
+      "reference_bbox": [
+        196,
+        111,
+        5,
+        3
+      ]
+    },
+    {
+      "index": 9,
+      "label": "SW.9",
+      "reference_bbox": [
+        196,
+        115,
+        5,
+        3
+      ]
+    },
+    {
+      "index": 10,
+      "label": "SW.10",
+      "reference_bbox": [
+        196,
+        118,
+        5,
+        3
+      ]
+    }
+  ],
+  "reference_image": "images\\reference_crop.png"
+}

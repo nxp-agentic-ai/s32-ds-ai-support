@@ -1,0 +1,11 @@
+logging:
+  level: DEBUG
+  timestamp_format: "%Y-%m-%d %H:%M:%S"
+  format: "%(asctime)s [%(name)s] %(levelname)s %(message)s"
+  file: ../.tmp/logs/s32debugger.log
+
+settings:
+  installation_path: ""  # S32Debugger install root (for example C:/NXP/S32DBG.3.6.8)
+  default_gdb_variant: "arm32"
+
+skills: ../skills/s32debugger

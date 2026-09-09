@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=81", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nxp-mcp-s32ct"
+version = "1.0.0"
+description = "S32 Configuration Tools MCP server (search-first action surface over the headless launcher, .mex inspection, validation and GTM use-case bootstrap)"
+
+requires-python = ">=3.11"
+dependencies = [
+  "nxp-mcp-shared==1.0.0",
+  "fastmcp==3.3.1",
+  "pyyaml==6.0.3",
+]
+
+[tool.setuptools]
+package-dir = {"nxp.mcp.s32ct" = "src"}
+
+packages = [
+  "nxp.mcp.s32ct",
+  "nxp.mcp.s32ct.actions",
+  "nxp.mcp.s32ct.config",
+  "nxp.mcp.s32ct.handlers",
+  "nxp.mcp.s32ct.impl",
+  "nxp.mcp.s32ct.metadata",
+  "nxp.mcp.s32ct.server",
+  "nxp.mcp.s32ct.tools",
+  "nxp.mcp.s32ct.resources",
+  "nxp.mcp.s32ct.prompts",
+]
+
+
+[project.scripts]
+nxp-mcp-s32ct = "nxp.mcp.s32ct.main:main"
+
+[project.entry-points."nxp.mcp.servers"]
+s32ct = "nxp.mcp.s32ct"

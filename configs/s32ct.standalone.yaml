@@ -1,0 +1,46 @@
+logging:
+  level: DEBUG
+  timestamp_format: "%Y-%m-%d %H:%M:%S"
+  format: "%(asctime)s [%(name)s] %(levelname)s %(message)s"
+  file: ../.tmp/logs/s32ct.log
+
+settings:
+  # All paths are optional. When left empty the server auto-discovers
+  # S32CT installs at startup and selects the newest one. Both S32CT
+  # distributions are supported:
+  #
+  #   * standalone S32CT     (toolsc.exe / tools.ini)
+  #   * S32 Design Studio    (s32dsc.exe / s32ds.ini, S32CT bundled as
+  #                           an Eclipse plugin set inside S32DS)
+  #
+  # Default scan roots: C:\NXP, %ProgramFiles%\NXP, %LOCALAPPDATA%\NXP,
+  # /opt/nxp, $HOME/NXP.
+  #
+  # Set `installation_path` explicitly to pin a specific install. Any of
+  # the following shapes is accepted:
+  #
+  #   * Desktop install root  C:\NXP\S32ConfigTools.2026.R1.9
+  #   * S32DS install root    C:\NXP\S32DS.3.6.5       (recommended)
+  #   * S32DS eclipse folder  C:\NXP\S32DS.3.6.5\eclipse
+  #
+  # Per-call `s32ct_launcher` / `launcher_ini` tool arguments still
+  # override at request time for one-off invocations.
+  installation_path: ""
+
+  # MCU data package - used to resolve GTM use-cases under
+  # <mcu_data_root>/processors/<MCU>/<PlatformSDK_*>/gtm/use_cases/use_cases_mexes/
+  # Leave empty to let the server pick the right one for the selected
+  # install (newest %ProgramData%/NXP/mcu_data_* for desktop,
+  # <S32DS>/eclipse/mcu_data for the integrated variant).
+  mcu_data_root: ""
+
+  # Path to the S32 CT HTML help tree. Informational only - this server
+  # does not ingest documentation. Wire the same value into
+  # one of `mcp_knowledge`'s `corpora[].dirs` lists to make the help searchable
+  # via `kb_search`. See configs/knowledge.standalone.yaml.
+  documentation_path: ""
+
+  # Default subprocess timeout (seconds) for headless launcher invocations.
+  timeout_s: 600
+
+skills: ../skills/s32ct

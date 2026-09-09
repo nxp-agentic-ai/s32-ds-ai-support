@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=81", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nxp-mcp-s32debugger"
+version = "1.0.0"
+description = "S32Debugger MCP server"
+requires-python = ">=3.11"
+dependencies = [
+  "nxp-mcp-shared==1.0.0",
+  "fastmcp==3.3.1",
+]
+
+[tool.setuptools]
+package-dir = {"nxp.mcp.s32debugger" = "src"}
+
+packages = [
+  "nxp.mcp.s32debugger",
+  "nxp.mcp.s32debugger.actions",
+  "nxp.mcp.s32debugger.config",
+  "nxp.mcp.s32debugger.handlers",
+  "nxp.mcp.s32debugger.metadata",
+  "nxp.mcp.s32debugger.server",
+  "nxp.mcp.s32debugger.tools",
+  "nxp.mcp.s32debugger.resources",
+  "nxp.mcp.s32debugger.prompts",
+]
+
+
+[project.entry-points."nxp.mcp.servers"]
+s32debugger = "nxp.mcp.s32debugger"

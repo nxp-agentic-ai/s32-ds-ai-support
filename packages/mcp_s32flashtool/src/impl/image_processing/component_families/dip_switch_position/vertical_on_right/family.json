@@ -1,0 +1,1 @@
+{"family_id": "vertical_on_right", "type": "dip_switch_position", "orientation": "vertical", "state_semantics": {"on_side": "right", "off_side": "left"}, "states": ["ON", "OFF"]} 

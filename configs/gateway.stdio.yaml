@@ -1,0 +1,157 @@
+logging:
+  level: DEBUG
+  timestamp_format: "%Y-%m-%d %H:%M:%S"    # strftime format for %(asctime)s
+  format: "%(asctime)s [%(name)s] %(levelname)s %(message)s"    # standard Python logging format string
+  file: ../.tmp/logs/gateway.log            # optional - omit or leave empty for stderr only
+
+gateway:
+  strict_startup: true
+  # Optional: list of directory roots to expose additional agent skills
+  # Each path is scanned one level deep for subdirs containing SKILL.md
+  skills: []
+
+servers:
+  template:
+    disabled: true
+    settings:
+      message: ok
+    skills: ../skills/template
+  rtd_project_migrator:
+    disabled: false
+    settings:
+      timeout_s: 1800
+    skills: ../skills/rtd_project_migrator
+  knowledge:
+    disabled: false
+    settings:
+      db_path: "../knowledge_db/bge-base-en-v1.5"
+      corpora:
+        - name: "compiler"
+          dirs:
+            - "../knowledge/compiler"
+        - name: "freemaster"
+          dirs:
+            - "../knowledge/freemaster"
+        - name: "mbdt"
+          dirs:
+            - "../knowledge/mbdt"
+        - name: "s32ct"
+          dirs:
+            - "../knowledge/s32ct"
+        - name: "s32debugger"
+          dirs:
+            - "../knowledge/s32debugger"
+        - name: "s32ds"
+          dirs:
+            - "../knowledge/s32ds"
+        - name: "s32flashtool"
+          dirs:
+            - "../knowledge/s32flashtool"
+        - name: "s32sdaf"
+          dirs:
+            - "../knowledge/s32sdaf"
+        - name: "s32trace"
+          dirs:
+            - "../knowledge/s32trace"
+      chunk_size: 1200
+      chunk_overlap: 200
+      embedder:
+        provider: "sentence_transformers"
+        model: "BAAI/bge-base-en-v1.5"
+        dimension: 768
+        device: "cpu"
+        cache: "../models"
+        offline: true                  # true = load only from local cache (no HuggingFace Hub calls); false = allow download
+
+      # Search fan-out: parallel per-corpus threading.
+      search:
+        max_workers: null              # null = auto (CPU-aware); 1 = sequential; N = fixed pool size
+
+      # Cross-encoder reranker: higher-quality result ordering at the cost of latency.
+      # and how to pre-download the model.
+      reranker:
+        enabled: false                 # flip to true to enable second-stage reranking
+        provider: "cross_encoder"      # only supported provider
+        model: "BAAI/bge-reranker-base"      # HF id or local path
+        device: "cpu"                  # "cpu" or "cuda" (GPU is ~15-30x faster)
+        cache: "../models"             # directory (config-relative) where models are cached / downloaded
+        offline: true                  # true = load only from local cache (no HuggingFace Hub calls); false = allow download
+        max_length: 512                # tokens per (query, chunk) pair (256 halves reranker cost)
+        candidates_multiplier: 4       # per-corpus overfetch (top_k * this) before reranking
+        candidates_max: 50             # hard ceiling on per-corpus overfetch
+        rerank_budget: 40              # global cap on cross-encoder inputs across all corpora
+
+      # ANN (IVF_PQ) vector index: opt-in acceleration for very large corpora.
+      # Disabled by default. Trades a small recall drop for sub-linear search cost;
+      # only recommended once any single corpus exceeds ~10 000 chunks.
+      ann:
+        enabled: false                 # master switch; false = linear scan on every corpus
+        min_rows_for_index: 256        # corpora smaller than this stay on linear scan
+        num_partitions: null           # null = auto (sqrt of row count, clamped 8..4096)
+        num_sub_vectors: null          # null = auto (embedding_dim // 16)
+        nprobes: 10                    # partitions probed per query (higher = more recall, slower)
+        rebuild_on_startup: false      # force full rebuild every server start (debug/recovery only)
+
+      mutable: false
+  freemaster:
+    disabled: false
+    settings:
+      ws_host: "localhost"
+      ws_port: 8090
+    skills: ../skills/freemaster
+  s32flashtool:
+    disabled: false
+    settings:
+      project_path: ""
+    skills: ../skills/s32flashtool
+  s32debugger:
+    disabled: false
+    settings:
+      installation_path: ""  # set to the S32Debugger install root (for example C:/NXP/S32DBG.3.6.8)
+      default_gdb_variant: "arm32"
+    skills: ../skills/s32debugger
+  s32ds:
+    disabled: false
+    settings:
+      s32ds_rest_port: 8088
+    skills: ../skills/s32ds
+  s32ct:
+    disabled: false
+    settings:
+      # All paths optional. When `installation_path` is empty the server
+      # auto-discovers S32CT installs at startup -- both the standalone
+      # S32CT and the variant integrated in S32 Design Studio.
+      #
+      # Set `installation_path` explicitly to pin a specific install. Any
+      # of the following shapes is accepted:
+      #
+      #   C:/NXP/S32ConfigTools.2026.R1.9    (desktop install root)
+      #   C:/NXP/S32DS.3.6.5                 (S32DS install root)
+      #   C:/NXP/S32DS.3.6.5/eclipse         (S32DS eclipse subfolder)
+      installation_path: ""
+      mcu_data_root: ""
+      documentation_path: ""
+      timeout_s: 600
+    skills: ../skills/s32ct
+  s32trace:
+    disabled: false
+    settings:
+      # Leave empty to auto-discover
+      installation_path: ""
+    skills: ../skills/s32trace
+  compiler:
+    disabled: false
+    settings:
+      # Optional - leave empty to auto-discover from:
+      #   C:/NXP/S32DS*/S32DS/build_tools
+      #   C:/Users/<user>/S32DS*/S32DS/build_tools
+      #
+      # Set explicitly if installed elsewhere:
+      #   toolchain_path: "C:/custom/path/S32DS/S32DS/build_tools"
+      toolchain_path: ""
+    skills: ../skills/compiler
+  s32sdaf:
+    disabled: false
+    settings:
+      installation_path: ""  # set to the volkano install root (for example C:/NXP/S32DS.3.6.5/S32DS/tools/S32Debugger/Debugger/Server/CCS/bin or C:/NXP/SDAF)
+    skills: ../skills/s32sdaf

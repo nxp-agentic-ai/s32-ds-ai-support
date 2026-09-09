@@ -1,0 +1,11 @@
+logging:
+  level: DEBUG
+  timestamp_format: "%Y-%m-%d %H:%M:%S"    # strftime format for %(asctime)s
+  format: "%(asctime)s [%(name)s] %(levelname)s %(message)s"    # standard Python logging format string
+  file: ../.tmp/logs/s32flashtool.log       # optional - omit for stderr only
+
+settings:
+  project_path: ""
+  image_processing: false
+
+skills: ../skills/s32flashtool

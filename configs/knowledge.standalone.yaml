@@ -1,0 +1,82 @@
+logging:
+  level: DEBUG
+  timestamp_format: "%Y-%m-%d %H:%M:%S"      # strftime format for %(asctime)s
+  format: "%(asctime)s [%(name)s] %(levelname)s %(message)s"    # standard Python logging format string
+  file: ../.tmp/logs/knowledge.log            # optional - omit for stderr only
+
+settings:
+  db_path: "../knowledge_db/bge-base-en-v1.5"   # directory where LanceDB stores data (one folder, many tables)
+  chunk_size: 1200                           # max words per chunk
+  chunk_overlap: 200                         # words repeated at chunk boundaries
+  # One LanceDB table per corpus, all stored under db_path.
+  # Each corpus is ingested independently from its own dirs.
+  # Corpus names match the LanceDB table names.
+  corpora:
+    - name: "compiler"
+      dirs:
+        - "../knowledge/compiler"
+    - name: "freemaster"
+      dirs:
+        - "../knowledge/freemaster"
+    - name: "mbdt"
+      dirs:
+        - "../knowledge/mbdt"
+    - name: "s32ct"
+      dirs:
+        - "../knowledge/s32ct"
+    - name: "s32debugger"
+      dirs:
+        - "../knowledge/s32debugger"
+    - name: "s32ds"
+      dirs:
+        - "../knowledge/s32ds"
+    - name: "s32flashtool"
+      dirs:
+        - "../knowledge/s32flashtool"
+    - name: "s32sdaf"
+      dirs:
+        - "../knowledge/s32sdaf"
+    - name: "s32trace"
+      dirs:
+        - "../knowledge/s32trace"
+
+  embedder:
+    provider: "sentence_transformers"        # only supported provider currently
+    model: "BAAI/bge-base-en-v1.5"           # Pre-downloaded HuggingFace model
+    dimension: 768                           # must match bge-base-en-v1.5 dimension
+    device: "cpu"                            # or "cuda" / "mps"
+    cache: "../models"                       # directory (config-relative) where models are cached / downloaded
+    offline: true                            # true = load only from local cache (no HuggingFace Hub calls); false = allow download
+
+
+  # Search fan-out: parallel per-corpus threading.
+  search:
+    max_workers: null              # null = auto (CPU-aware); 1 = sequential; N = fixed pool size
+
+  # Cross-encoder reranker: higher-quality result ordering at the cost of latency.
+  # and how to pre-download the model.
+  reranker:
+    enabled: false                 # flip to true to enable second-stage reranking
+    provider: "cross_encoder"      # only supported provider
+    model: "BAAI/bge-reranker-base"      # HF id or local path
+    device: "cpu"                  # "cpu" or "cuda" (GPU is ~15-30x faster)
+    cache: "../models"             # directory (config-relative) where models are cached / downloaded
+    offline: true                  # true = load only from local cache (no HuggingFace Hub calls); false = allow download
+    max_length: 512                # tokens per (query, chunk) pair (256 halves reranker cost)
+
+    candidates_multiplier: 4       # per-corpus overfetch (top_k * this) before reranking
+    candidates_max: 50             # hard ceiling on per-corpus overfetch
+    rerank_budget: 40              # global cap on cross-encoder inputs across all corpora
+
+  # ANN (IVF_PQ) vector index: opt-in acceleration for very large corpora.
+  # Disabled by default. Trades a small recall drop for sub-linear search cost;
+  # only recommended once any single corpus exceeds ~10 000 chunks.
+  ann:
+    enabled: false                 # master switch; false = linear scan on every corpus
+    min_rows_for_index: 256        # corpora smaller than this stay on linear scan
+    num_partitions: null           # null = auto (sqrt of row count, clamped 8..4096)
+    num_sub_vectors: null          # null = auto (embedding_dim // 16)
+    nprobes: 10                    # partitions probed per query (higher = more recall, slower)
+    rebuild_on_startup: false      # force full rebuild every server start (debug/recovery only)
+
+  mutable: false                   # ingest/remove tools disabled = read-only KB

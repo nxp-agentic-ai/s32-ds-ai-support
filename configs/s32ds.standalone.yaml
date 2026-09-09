@@ -1,0 +1,12 @@
+server:
+  name: s32ds
+  version: 1.0.0
+  description: "S32 Design Studio MCP server"
+
+logging:
+  level: INFO
+
+skills: "../skills/s32ds"
+
+settings:
+  s32ds_rest_port: 8088

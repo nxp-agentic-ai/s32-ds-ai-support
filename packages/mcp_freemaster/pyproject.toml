@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=81", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nxp-mcp-freemaster"
+version = "1.0.0"
+description = """
+FreeMASTER MCP server. Provides tools to connect to and interact with FreeMASTER Lite via JSON-RPC over WebSocket.
+
+Before performing any FreeMASTER-related task, consult the available skill resources first. Skills provide step-by-step guidance for common workflows. Access them via the resource URIs:
+- skill://nxp_freemaster/freemaster_driver_integration - instructions for embedded apps using the FreeMASTER Driver
+- skill://nxp_freemaster/freemaster_lite_command_line_arguments - specification for CLI options for fmlite.exe / fmlite.bin
+- skill://nxp_freemaster/freemaster_lite_configuration_file -specification for FreeMASTER Lite configuration file (.fmcfg)
+- skill://nxp_freemaster/freemaster_lite_jsonrpc_api - FreeMASTER Lite JSON-RPC API reference
+- skill://nxp_freemaster/freemaster_lite_start_server - launch the FreeMASTER Lite service
+- skill://nxp_freemaster/freemaster_lite_stop_server - stop the running service
+- skill://nxp_freemaster/freemaster_lite_web_application - instructions for web apps using the FreeMASTER Client JS library
+
+If a skill does not fully answer the question, use the kb_search tool (knowledge base semantic search) for additional documentation.
+"""
+requires-python = ">=3.11"
+dependencies = [
+  "nxp-mcp-shared==1.0.0",
+  "fastmcp==3.3.1",
+  "pyyaml==6.0.3",
+  "requests==2.34.2",
+  "websockets==16.0",
+]
+
+[tool.setuptools]
+package-dir = {"nxp.mcp.freemaster" = "src"}
+
+packages = [
+  "nxp.mcp.freemaster",
+  "nxp.mcp.freemaster.config",
+  "nxp.mcp.freemaster.metadata",
+  "nxp.mcp.freemaster.rpc",
+  "nxp.mcp.freemaster.server",
+  "nxp.mcp.freemaster.tools",
+  "nxp.mcp.freemaster.tools.actions",
+  "nxp.mcp.freemaster.tools.actions.handlers"
+]
+
+
+[project.scripts]
+nxp-mcp-freemaster = "nxp.mcp.freemaster.main:main"
+
+[project.entry-points."nxp.mcp.servers"]
+freemaster = "nxp.mcp.freemaster"

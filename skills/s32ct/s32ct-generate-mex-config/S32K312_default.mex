@@ -1,0 +1,1347 @@
+<?xml version="1.0" encoding= "UTF-8" ?>
+<!--
+    Copyright 2026 NXP
+
+    NXP Proprietary. This software is owned or controlled by NXP and may
+    only be used strictly in accordance with the applicable license terms.
+    By expressly accepting such terms or by downloading, installing,
+    activating and/or otherwise using the software, you are agreeing that
+    you have read, and that you agree to comply with and are bound by,
+    such license terms.  If you do not agree to be bound by the applicable
+    license terms, then you may not retain, install, activate or otherwise
+    use the software.
+-->
+<configuration name="S32K312" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_19 http://mcuxpresso.nxp.com/XSD/mex_configuration_19.xsd" uuid="cb0a0571-31b0-4026-b225-2a0da4ce6ac1" version="19" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_19" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <common>
+      <processor>S32K312</processor>
+      <package>S32K312_172HDQFP</package>
+      <mcu_data>PlatformSDK_S32K3</mcu_data>
+      <cores selected="M7_0">
+         <core name="Cortex-M7" id="M7_0" description=""/>
+      </cores>
+      <description></description>
+   </common>
+   <preferences>
+      <validate_boot_init_only>true</validate_boot_init_only>
+      <generate_code_modified_registers_only>false</generate_code_modified_registers_only>
+      <update_include_paths>true</update_include_paths>
+      <enable_parallel_routing>true</enable_parallel_routing>
+      <generate_registers_defines>false</generate_registers_defines>
+   </preferences>
+   <tools>
+      <pins name="Pins" version="17.0" enabled="true" update_project_code="true">
+         <generated_project_files>
+            <file path="board/Siul2_Port_Ip_Cfg.c" update_enabled="true"/>
+            <file path="board/Siul2_Port_Ip_Cfg.h" update_enabled="true"/>
+            <file path="board/Tspc_Port_Ip_Cfg.c" update_enabled="true"/>
+            <file path="board/Tspc_Port_Ip_Cfg.h" update_enabled="true"/>
+         </generated_project_files>
+         <pins_profile>
+            <processor_version>0.0.0</processor_version>
+         </pins_profile>
+         <functions_list>
+            <function name="PortContainer_0_BOARD_InitPeripherals">
+               <description>Configures pin routing and optionally pin electrical features.</description>
+               <options>
+                  <callFromInitBoot>true</callFromInitBoot>
+                  <coreID>M7_0</coreID>
+               </options>
+               <dependencies>
+                  <dependency resourceType="SWComponent" resourceId="platform.driver.pins" description="Pins initialization requires the PINS Driver in the project." problem_level="2" source="Pins:PortContainer_0_BOARD_InitPeripherals">
+                     <feature name="enabled" evaluation="equal" configuration="M7_0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+               </dependencies>
+               <pins>
+                  <pin peripheral="SIUL2" signal="gpio, 0" pin_num="137" pin_signal="PTA0">
+                     <pin_features>
+                        <pin_feature name="direction" value="INPUT/OUTPUT"/>
+                     </pin_features>
+                  </pin>
+               </pins>
+            </function>
+         </functions_list>
+      </pins>
+      <clocks name="Clocks" version="19.0" enabled="true" update_project_code="true">
+         <generated_project_files>
+            <file path="generate/include/Clock_Ip_Cfg.h" update_enabled="true"/>
+            <file path="generate/include/Clock_Ip_Cfg_Defines.h" update_enabled="true"/>
+            <file path="generate/src/Clock_Ip_Cfg.c" update_enabled="true"/>
+         </generated_project_files>
+         <clocks_profile>
+            <processor_version>0.0.0</processor_version>
+         </clocks_profile>
+         <clock_configurations>
+            <clock_configuration name="ClockConfig0" id_prefix="" prefix_user_defined="false">
+               <description></description>
+               <options/>
+               <dependencies>
+                  <dependency resourceType="PinSignal" resourceId="FXOSC_CLK.EXTAL" description="&apos;External pin&apos; (Pins tool id: FXOSC_CLK.EXTAL, Clocks tool id: FXOSC_CLK.EXTAL) needs to be routed" problem_level="1" source="Clocks:ClockConfig0">
+                     <feature name="routed" evaluation="">
+                        <data>true</data>
+                     </feature>
+                     <feature name="direction" evaluation="">
+                        <data>INPUT</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="PinSignal" resourceId="FXOSC_CLK.XTAL" description="&apos;External pin&apos; (Pins tool id: FXOSC_CLK.XTAL, Clocks tool id: FXOSC_CLK.XTAL) needs to be routed" problem_level="1" source="Clocks:ClockConfig0">
+                     <feature name="routed" evaluation="">
+                        <data>true</data>
+                     </feature>
+                     <feature name="direction" evaluation="">
+                        <data>OUTPUT</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="PinSignal" resourceId="SXOSC_CLK.EXTAL" description="&apos;External pin&apos; (Pins tool id: SXOSC_CLK.EXTAL, Clocks tool id: SXOSC_CLK.EXTAL) needs to be routed" problem_level="1" source="Clocks:ClockConfig0">
+                     <feature name="routed" evaluation="">
+                        <data>true</data>
+                     </feature>
+                     <feature name="direction" evaluation="">
+                        <data>INPUT</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="PinSignal" resourceId="SXOSC_CLK.XTAL" description="&apos;External pin&apos; (Pins tool id: SXOSC_CLK.XTAL, Clocks tool id: SXOSC_CLK.XTAL) needs to be routed" problem_level="1" source="Clocks:ClockConfig0">
+                     <feature name="routed" evaluation="">
+                        <data>true</data>
+                     </feature>
+                     <feature name="direction" evaluation="">
+                        <data>OUTPUT</data>
+                     </feature>
+                  </dependency>
+               </dependencies>
+               <clock_sources>
+                  <clock_source id="FXOSC_CLK.FXOSC_CLK.outFreq" value="16 MHz" locked="false" enabled="true"/>
+                  <clock_source id="SXOSC_CLK.SXOSC_CLK.outFreq" value="32.768 kHz" locked="false" enabled="true"/>
+               </clock_sources>
+               <clock_outputs>
+                  <clock_output id="ADC0_CLK.outFreq" value="120 MHz" locked="false" accuracy=""/>
+                  <clock_output id="ADC1_CLK.outFreq" value="120 MHz" locked="false" accuracy=""/>
+                  <clock_output id="AIPS_PLAT_CLK.outFreq" value="60 MHz" locked="false" accuracy=""/>
+                  <clock_output id="AIPS_SLOW_CLK.outFreq" value="30 MHz" locked="false" accuracy=""/>
+                  <clock_output id="BCTU0_CLK.outFreq" value="120 MHz" locked="false" accuracy=""/>
+                  <clock_output id="CLKOUT_RUN_CLK.outFreq" value="8 MHz" locked="false" accuracy=""/>
+                  <clock_output id="CLKOUT_STANDBY_CLK.outFreq" value="24 MHz" locked="false" accuracy=""/>
+                  <clock_output id="CMP0_CLK.outFreq" value="30 MHz" locked="false" accuracy=""/>
+                  <clock_output id="CMP1_CLK.outFreq" value="30 MHz" locked="false" accuracy=""/>
+                  <clock_output id="CORE_CLK.outFreq" value="120 MHz" locked="false" accuracy=""/>
+                  <clock_output id="CRC0_CLK.outFreq" value="60 MHz" locked="false" accuracy=""/>
+                  <clock_output id="DCM0_CLK.outFreq" value="30 MHz" locked="false" accuracy=""/>
+                  <clock_output id="DCM_CLK.outFreq" value="30 MHz" locked="false" accuracy=""/>
+                  <clock_output id="DMAMUX0_CLK.outFreq" value="120 MHz" locked="false" accuracy=""/>
+                  <clock_output id="DMAMUX1_CLK.outFreq" value="120 MHz" locked="false" accuracy=""/>
+                  <clock_output id="EDMA0_CLK.outFreq" value="120 MHz" locked="false" accuracy=""/>
+                  <clock_output id="EDMA0_TCD0_CLK.outFreq" value="120 MHz" locked="false" accuracy=""/>
+                  <clock_output id="EDMA0_TCD10_CLK.outFreq" value="120 MHz" locked="false" accuracy=""/>
+                  <clock_output id="EDMA0_TCD11_CLK.outFreq" value="120 MHz" locked="false" accuracy=""/>
+                  <clock_output id="EDMA0_TCD1_CLK.outFreq" value="120 MHz" locked="false" accuracy=""/>
+                  <clock_output id="EDMA0_TCD2_CLK.outFreq" value="120 MHz" locked="false" accuracy=""/>
+                  <clock_output id="EDMA0_TCD3_CLK.outFreq" value="120 MHz" locked="false" accuracy=""/>
+                  <clock_output id="EDMA0_TCD4_CLK.outFreq" value="120 MHz" locked="false" accuracy=""/>
+                  <clock_output id="EDMA0_TCD5_CLK.outFreq" value="120 MHz" locked="false" accuracy=""/>
+                  <clock_output id="EDMA0_TCD6_CLK.outFreq" value="120 MHz" locked="false" accuracy=""/>
+                  <clock_output id="EDMA0_TCD7_CLK.outFreq" value="120 MHz" locked="false" accuracy=""/>
+                  <clock_output id="EDMA0_TCD8_CLK.outFreq" value="120 MHz" locked="false" accuracy=""/>
+                  <clock_output id="EDMA0_TCD9_CLK.outFreq" value="120 MHz" locked="false" accuracy=""/>
+                  <clock_output id="EIM0_CLK.outFreq" value="60 MHz" locked="false" accuracy=""/>
+                  <clock_output id="EMIOS0_CLK.outFreq" value="120 MHz" locked="false" accuracy=""/>
+                  <clock_output id="EMIOS1_CLK.outFreq" value="120 MHz" locked="false" accuracy=""/>
+                  <clock_output id="ERM0_CLK.outFreq" value="30 MHz" locked="false" accuracy=""/>
+                  <clock_output id="FIRCOUT.outFreq" value="48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="FLEXCAN0_CLK.outFreq" value="24 MHz" locked="false" accuracy=""/>
+                  <clock_output id="FLEXCAN1_CLK.outFreq" value="24 MHz" locked="false" accuracy=""/>
+                  <clock_output id="FLEXCAN2_CLK.outFreq" value="24 MHz" locked="false" accuracy=""/>
+                  <clock_output id="FLEXCAN3_CLK.outFreq" value="24 MHz" locked="false" accuracy=""/>
+                  <clock_output id="FLEXCAN4_CLK.outFreq" value="24 MHz" locked="false" accuracy=""/>
+                  <clock_output id="FLEXCAN5_CLK.outFreq" value="24 MHz" locked="false" accuracy=""/>
+                  <clock_output id="FLEXCANA_CLK.outFreq" value="24 MHz" locked="false" accuracy=""/>
+                  <clock_output id="FLEXCANB_CLK.outFreq" value="24 MHz" locked="false" accuracy=""/>
+                  <clock_output id="FLEXIO0_CLK.outFreq" value="120 MHz" locked="false" accuracy=""/>
+                  <clock_output id="FXOSCOUT.outFreq" value="16 MHz" locked="false" accuracy=""/>
+                  <clock_output id="HSE_CLK.outFreq" value="60 MHz" locked="false" accuracy=""/>
+                  <clock_output id="INTM_CLK.outFreq" value="60 MHz" locked="false" accuracy=""/>
+                  <clock_output id="LCU0_CLK.outFreq" value="120 MHz" locked="false" accuracy=""/>
+                  <clock_output id="LCU1_CLK.outFreq" value="120 MHz" locked="false" accuracy=""/>
+                  <clock_output id="LPI2C0_CLK.outFreq" value="30 MHz" locked="false" accuracy=""/>
+                  <clock_output id="LPI2C1_CLK.outFreq" value="30 MHz" locked="false" accuracy=""/>
+                  <clock_output id="LPSPI0_CLK.outFreq" value="60 MHz" locked="false" accuracy=""/>
+                  <clock_output id="LPSPI1_CLK.outFreq" value="30 MHz" locked="false" accuracy=""/>
+                  <clock_output id="LPSPI2_CLK.outFreq" value="30 MHz" locked="false" accuracy=""/>
+                  <clock_output id="LPSPI3_CLK.outFreq" value="30 MHz" locked="false" accuracy=""/>
+                  <clock_output id="LPUART0_CLK.outFreq" value="60 MHz" locked="false" accuracy=""/>
+                  <clock_output id="LPUART1_CLK.outFreq" value="30 MHz" locked="false" accuracy=""/>
+                  <clock_output id="LPUART2_CLK.outFreq" value="30 MHz" locked="false" accuracy=""/>
+                  <clock_output id="LPUART3_CLK.outFreq" value="30 MHz" locked="false" accuracy=""/>
+                  <clock_output id="LPUART4_CLK.outFreq" value="30 MHz" locked="false" accuracy=""/>
+                  <clock_output id="LPUART5_CLK.outFreq" value="30 MHz" locked="false" accuracy=""/>
+                  <clock_output id="LPUART6_CLK.outFreq" value="30 MHz" locked="false" accuracy=""/>
+                  <clock_output id="LPUART7_CLK.outFreq" value="30 MHz" locked="false" accuracy=""/>
+                  <clock_output id="MSCM_CLK.outFreq" value="60 MHz" locked="false" accuracy=""/>
+                  <clock_output id="PIT0_CLK.outFreq" value="30 MHz" locked="false" accuracy=""/>
+                  <clock_output id="PIT1_CLK.outFreq" value="30 MHz" locked="false" accuracy=""/>
+                  <clock_output id="PLL_PHI0.outFreq" value="120 MHz" locked="false" accuracy=""/>
+                  <clock_output id="PLL_PHI1.outFreq" value="48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="RTC0_CLK.outFreq" value="32.768 kHz" locked="false" accuracy=""/>
+                  <clock_output id="RTC_CLK.outFreq" value="32.768 kHz" locked="false" accuracy=""/>
+                  <clock_output id="SCS_CLK.outFreq" value="120 MHz" locked="false" accuracy=""/>
+                  <clock_output id="SIRCOUT.outFreq" value="32 kHz" locked="false" accuracy=""/>
+                  <clock_output id="SIUL2_CLK.outFreq" value="30 MHz" locked="false" accuracy=""/>
+                  <clock_output id="STCU0_CLK.outFreq" value="30 MHz" locked="false" accuracy=""/>
+                  <clock_output id="STM0_CLK.outFreq" value="48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="STMA_CLK.outFreq" value="48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="SWT0_CLK.outFreq" value="32 kHz" locked="false" accuracy=""/>
+                  <clock_output id="SXOSCOUT.outFreq" value="32.768 kHz" locked="false" accuracy=""/>
+                  <clock_output id="TEMPSENSE_CLK.outFreq" value="120 MHz" locked="false" accuracy=""/>
+                  <clock_output id="TRACE_CLK.outFreq" value="24 MHz" locked="false" accuracy=""/>
+                  <clock_output id="TRGMUX0_CLK.outFreq" value="30 MHz" locked="false" accuracy=""/>
+                  <clock_output id="TSENSE0_CLK.outFreq" value="30 MHz" locked="false" accuracy=""/>
+                  <clock_output id="WKPU0_CLK.outFreq" value="30 MHz" locked="false" accuracy=""/>
+               </clock_outputs>
+               <clock_settings>
+                  <setting id="CORE_MFD.scale" value="120" locked="true"/>
+                  <setting id="CORE_PLLODIV_0_DE" value="Enabled" locked="false"/>
+                  <setting id="CORE_PLLODIV_1_DE" value="Enabled" locked="false"/>
+                  <setting id="CORE_PLL_PD" value="Power_up" locked="false"/>
+                  <setting id="FXOSC_PM" value="Crystal_mode" locked="false"/>
+                  <setting id="MC_CGM_MUX_0.sel" value="PHI0" locked="false"/>
+                  <setting id="MC_CGM_MUX_0_DIV0.scale" value="1" locked="true"/>
+                  <setting id="MC_CGM_MUX_0_DIV0_Trigger" value="Common" locked="false"/>
+                  <setting id="MC_CGM_MUX_0_DIV1.scale" value="2" locked="true"/>
+                  <setting id="MC_CGM_MUX_0_DIV1_Trigger" value="Common" locked="false"/>
+                  <setting id="MC_CGM_MUX_0_DIV2.scale" value="4" locked="true"/>
+                  <setting id="MC_CGM_MUX_0_DIV2_Trigger" value="Common" locked="false"/>
+                  <setting id="MC_CGM_MUX_0_DIV3.scale" value="2" locked="true"/>
+                  <setting id="MC_CGM_MUX_0_DIV3_Trigger" value="Common" locked="false"/>
+                  <setting id="MC_CGM_MUX_0_DIV4.scale" value="4" locked="true"/>
+                  <setting id="MC_CGM_MUX_0_DIV4_Trigger" value="Common" locked="false"/>
+                  <setting id="MC_CGM_MUX_6.sel" value="N/A" locked="false"/>
+                  <setting id="MC_CGM_MUX_6_DE0" value="Enabled" locked="false"/>
+                  <setting id="MC_CGM_MUX_6_DIV0.scale" value="2" locked="true"/>
+                  <setting id="MODULE_CLOCKS.MC_CGM_AUX3_DIV0.scale" value="2" locked="true"/>
+                  <setting id="MODULE_CLOCKS.MC_CGM_AUX4_DIV0.scale" value="2" locked="true"/>
+                  <setting id="PHI0.scale" value="2" locked="true"/>
+                  <setting id="PHI1.scale" value="5" locked="true"/>
+                  <setting id="PLL_PREDIV.scale" value="2" locked="true"/>
+                  <setting id="POSTDIV.scale" value="4" locked="true"/>
+                  <setting id="SXOSC_PM" value="Crystal_mode" locked="false"/>
+               </clock_settings>
+               <called_from_default_init>true</called_from_default_init>
+            </clock_configuration>
+         </clock_configurations>
+      </clocks>
+      <ddr name="DDR" version="1.0" enabled="false" update_project_code="true">
+         <generated_project_files/>
+         <components/>
+      </ddr>
+      <dcd name="DCD" version="1.0" enabled="false" update_project_code="true" isSelfTest="false">
+         <generated_project_files/>
+         <dcdx_profile>
+            <processor_version>N/A</processor_version>
+         </dcdx_profile>
+         <dcdx_configurations/>
+      </dcd>
+      <ivt name="IVT" version="1.0" enabled="false" update_project_code="true">
+         <generated_project_files/>
+         <ivt_profile>
+            <processor_version>N/A</processor_version>
+         </ivt_profile>
+      </ivt>
+      <quadspi name="QuadSPI" version="1.0" enabled="false" update_project_code="true">
+         <generated_project_files/>
+         <quadspi_profile>
+            <processor_version>N/A</processor_version>
+         </quadspi_profile>
+      </quadspi>
+      <efuse name="eFUSE" version="1.0" enabled="false" update_project_code="true">
+         <efuse_profile>
+            <processor_version>N/A</processor_version>
+         </efuse_profile>
+      </efuse>
+      <gtm name="GTM" version="1.0" enabled="false" update_project_code="true">
+         <generated_project_files/>
+         <gtm_profile>
+            <processor_version>N/A</processor_version>
+         </gtm_profile>
+      </gtm>
+      <ice name="ICE" version="1.0" enabled="false" update_project_code="true">
+         <ice_profile>
+            <processor_version>N/A</processor_version>
+         </ice_profile>
+      </ice>
+      <periphs name="Peripherals" version="15.0" enabled="true" update_project_code="true">
+         <dependencies>
+            <dependency resourceType="SWComponent" resourceId="platform.driver.osif" description="osif is not found in the toolchain/IDE project. The project will not compile!" problem_level="2" source="Peripherals">
+               <feature name="enabled" evaluation="equal">
+                  <data type="Boolean">true</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.driver.osif" description="An unsupported version of the osif in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}. The project might not compile correctly." problem_level="1" source="Peripherals">
+               <feature name="version" evaluation="equivalent">
+                  <data type="Version">1.0.0</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.driver.siul2_port" description="siul2_port is not found in the toolchain/IDE project. The project will not compile!" problem_level="2" source="Peripherals">
+               <feature name="enabled" evaluation="equal">
+                  <data type="Boolean">true</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.driver.siul2_port" description="An unsupported version of the siul2_port in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}. The project might not compile correctly." problem_level="1" source="Peripherals">
+               <feature name="version" evaluation="equivalent">
+                  <data type="Version">1.0.0</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.driver.adc" description="adc is not found in the toolchain/IDE project. The project will not compile!" problem_level="2" source="Peripherals">
+               <feature name="enabled" evaluation="equal">
+                  <data type="Boolean">true</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.driver.adc" description="An unsupported version of the adc in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}. The project might not compile correctly." problem_level="1" source="Peripherals">
+               <feature name="version" evaluation="equivalent">
+                  <data type="Version">1.0.0</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.driver.Can_43_FLEXCAN" description="Can_43_FLEXCAN is not found in the toolchain/IDE project. The project will not compile!" problem_level="2" source="Peripherals">
+               <feature name="enabled" evaluation="equal">
+                  <data type="Boolean">true</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.driver.Can_43_FLEXCAN" description="An unsupported version of the Can_43_FLEXCAN in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}. The project might not compile correctly." problem_level="1" source="Peripherals">
+               <feature name="version" evaluation="equivalent">
+                  <data type="Version">0.1.0</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.driver.spi" description="Spi is not found in the toolchain/IDE project. The project will not compile!" problem_level="2" source="Peripherals">
+               <feature name="enabled" evaluation="equal">
+                  <data type="Boolean">true</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.driver.spi" description="An unsupported version of the Spi in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}. The project might not compile correctly." problem_level="1" source="Peripherals">
+               <feature name="version" evaluation="equivalent">
+                  <data type="Version">1.0.0</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.driver.mcu" description="Mcu is not found in the toolchain/IDE project. The project will not compile!" problem_level="2" source="Peripherals">
+               <feature name="enabled" evaluation="equal">
+                  <data type="Boolean">true</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.driver.mcu" description="An unsupported version of the Mcu in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}. The project might not compile correctly." problem_level="1" source="Peripherals">
+               <feature name="version" evaluation="equivalent">
+                  <data type="Version">1.0.0</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.driver.uart" description="Uart is not found in the toolchain/IDE project. The project will not compile!" problem_level="2" source="Peripherals">
+               <feature name="enabled" evaluation="equal">
+                  <data type="Boolean">true</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.driver.uart" description="An unsupported version of the Uart in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}. The project might not compile correctly." problem_level="1" source="Peripherals">
+               <feature name="version" evaluation="equivalent">
+                  <data type="Version">1.0.0</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.driver.pwm" description="Pwm is not found in the toolchain/IDE project. The project will not compile!" problem_level="2" source="Peripherals">
+               <feature name="enabled" evaluation="equal">
+                  <data type="Boolean">true</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.driver.pwm" description="An unsupported version of the Pwm in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}. The project might not compile correctly." problem_level="1" source="Peripherals">
+               <feature name="version" evaluation="equivalent">
+                  <data type="Version">1.0.0</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.driver.Lin_43_LPUART_FLEXIO" description="Lin_43_LPUART_FLEXIO is not found in the toolchain/IDE project. The project will not compile!" problem_level="2" source="Peripherals">
+               <feature name="enabled" evaluation="equal">
+                  <data type="Boolean">true</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.driver.Lin_43_LPUART_FLEXIO" description="An unsupported version of the Lin_43_LPUART_FLEXIO in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}. The project might not compile correctly." problem_level="1" source="Peripherals">
+               <feature name="version" evaluation="equivalent">
+                  <data type="Version">1.0.0</data>
+               </feature>
+            </dependency>
+         </dependencies>
+         <generated_project_files>
+            <file path="generate/include/DeviceDefinition.h" update_enabled="true"/>
+            <file path="generate/include/OsIf_ArchCfg.h" update_enabled="true"/>
+            <file path="generate/include/OsIf_Cfg.h" update_enabled="true"/>
+            <file path="generate/include/Siul2_Port_Ip_Defines.h" update_enabled="true"/>
+            <file path="generate/include/Soc_Ips.h" update_enabled="true"/>
+            <file path="generate/include/modules.h" update_enabled="true"/>
+            <file path="generate/src/OsIf_Cfg.c" update_enabled="true"/>
+         </generated_project_files>
+         <peripherals_profile>
+            <processor_version>0.0.0</processor_version>
+         </peripherals_profile>
+         <functional_groups>
+            <functional_group name="BOARD_InitPeripherals" uuid="343d8c09-29ab-44df-a8a2-0e35bf16a60f" called_from_default_init="true" id_prefix="" core="M7_0">
+               <description></description>
+               <options/>
+               <dependencies/>
+               <instances>
+                  <instance name="BaseNXP" uuid="a62e3129-c7ba-41d9-97d3-6cb575e7e56b" type="BaseNXP" type_id="Base" mode="general" enabled="true" comment="" custom_name_enabled="false" editing_lock="false">
+                     <config_set name="BaseNXP">
+                        <setting name="Name" value="BaseNXP"/>
+                        <struct name="ConfigTimeSupport">
+                           <setting name="POST_BUILD_VARIANT_USED" value="false"/>
+                           <setting name="IMPLEMENTATION_CONFIG_VARIANT" value="VARIANT-PRE-COMPILE"/>
+                        </struct>
+                        <struct name="OsIfGeneral">
+                           <setting name="Name" value="OsIfGeneral"/>
+                           <setting name="OsIfMulticoreSupport" value="false"/>
+                           <setting name="OsIfEnableUserModeSupport" value="false"/>
+                           <setting name="OsIfDevErrorDetect" value="true"/>
+                           <setting name="OsIfUseSystemTimer" value="false"/>
+                           <setting name="OsIfUseCustomTimer" value="false"/>
+                           <setting name="OsIfUseGetUserId" value="GET_CORE_ID"/>
+                           <setting name="OsIfInstanceId" value="255"/>
+                           <setting name="OsIfGetPhysicalCoreIdEnable" value="false"/>
+                           <setting name="OsIfSoftwareSemaphoredEnable" value="false"/>
+                           <struct name="OsIfOperatingSystemType">
+                              <setting name="Name" value="OsIfOperatingSystemType"/>
+                              <setting name="Choice" value="OsIfBaremetalType"/>
+                              <struct name="OsIfBaremetalType" quick_selection="Default">
+                                 <setting name="Name" value="OsIfOperatingSystemType"/>
+                              </struct>
+                           </struct>
+                           <array name="OsIfEcucPartitionRef"/>
+                           <array name="OsIfCounterConfig"/>
+                        </struct>
+                        <struct name="CommonPublishedInformation" quick_selection="Default">
+                           <setting name="Name" value="CommonPublishedInformation"/>
+                           <setting name="ModuleId" value="0"/>
+                           <setting name="VendorId" value="43"/>
+                           <array name="VendorApiInfix"/>
+                           <setting name="ArReleaseMajorVersion" value="4"/>
+                           <setting name="ArReleaseMinorVersion" value="7"/>
+                           <setting name="ArReleaseRevisionVersion" value="0"/>
+                           <setting name="SwMajorVersion" value="5"/>
+                           <setting name="SwMinorVersion" value="0"/>
+                           <setting name="SwPatchVersion" value="0"/>
+                        </struct>
+                     </config_set>
+                  </instance>
+                  <instance name="Siul2_Port" uuid="16480d47-54a9-4096-9930-a993ccf616b6" type="Siul2_Port" type_id="Siul2_Port" mode="ip" enabled="true" comment="" custom_name_enabled="false" editing_lock="false">
+                     <config_set name="Siul2_Port" quick_selection="Siul2PortDefault">
+                        <setting name="Name" value="Siul2_Port"/>
+                        <struct name="ConfigTimeSupport">
+                           <setting name="POST_BUILD_VARIANT_USED" value="false"/>
+                           <setting name="IMPLEMENTATION_CONFIG_VARIANT" value="VARIANT-PRE-COMPILE"/>
+                        </struct>
+                        <struct name="PortGeneral">
+                           <setting name="Name" value="PortGeneral"/>
+                           <setting name="SIUL2PortIPDevErrorDetect" value="true"/>
+                           <setting name="PortEnableUserModeSupport" value="false"/>
+                        </struct>
+                        <struct name="PortConfigSet">
+                           <setting name="Name" value="PortConfigSet"/>
+                           <array name="PortContainer">
+                              <struct name="0">
+                                 <setting name="Name" value="PortContainer_0"/>
+                                 <array name="PortPin">
+                                    <struct name="0">
+                                       <setting name="Name" value="PortPin_0"/>
+                                       <setting name="PortPinPue" value="false"/>
+                                       <setting name="PortPinPus" value="false"/>
+                                       <setting name="PortPinSafeMode" value="false"/>
+                                       <setting name="PortPinDse" value="false"/>
+                                       <setting name="PortPinWithReadBack" value="false"/>
+                                       <setting name="PortPinPke" value="false"/>
+                                       <setting name="PortPinIfe" value="false"/>
+                                       <setting name="PortPinDirectionChangeable" value="true"/>
+                                       <setting name="PortPinModeChangeable" value="true"/>
+                                       <setting name="PortPinInvertControl" value="false"/>
+                                       <setting name="PortPinSiul2Instance" value="SIUL2_0"/>
+                                       <setting name="PortPinId" value="1"/>
+                                       <setting name="PortPinInitialMode" value="PORT_GPIO_MODE"/>
+                                    </struct>
+                                 </array>
+                              </struct>
+                           </array>
+                        </struct>
+                     </config_set>
+                  </instance>
+                  <instance name="Mcu" uuid="2538e250-b17d-4e9c-a09f-93a679a67ee1" type="Mcu" type_id="Mcu" mode="autosar" enabled="true" comment="" custom_name_enabled="false" editing_lock="false">
+                     <config_set name="Mcu" quick_selection="autosar_default">
+                        <setting name="Name" value="Mcu"/>
+                        <struct name="ConfigTimeSupport">
+                           <setting name="POST_BUILD_VARIANT_USED" value="false"/>
+                           <setting name="IMPLEMENTATION_CONFIG_VARIANT" value="VARIANT-POST-BUILD"/>
+                        </struct>
+                        <struct name="McuGeneralConfiguration">
+                           <setting name="Name" value="McuGeneralConfiguration"/>
+                           <setting name="McuDevErrorDetect" value="false"/>
+                           <setting name="McuVersionInfoApi" value="false"/>
+                           <setting name="McuGetRamStateApi" value="false"/>
+                           <setting name="McuInitClock" value="true"/>
+                           <setting name="McuNoPll" value="false"/>
+                           <setting name="McuEnterLowPowerMode" value="true"/>
+                           <setting name="McuTimeout" value="50000"/>
+                           <setting name="McuEnableUserModeSupport" value="false"/>
+                           <setting name="McuMultiPartitionSupport" value="false"/>
+                           <array name="McuInitEcucPartitionRef"/>
+                           <setting name="McuPerformResetApi" value="false"/>
+                           <setting name="McuCalloutBeforePerformReset" value="false"/>
+                           <setting name="McuPerformResetCallout" value="NULL_PTR"/>
+                           <array name="McuCmuNotification"/>
+                           <setting name="McuAlternateResetIsrUsed" value="false"/>
+                           <setting name="McuCmuErrorIsrUsed" value="false"/>
+                           <setting name="McuVoltageErrorIsrUsed" value="false"/>
+                           <array name="McuErrorIsrNotification"/>
+                           <setting name="McuDisableRgmInit" value="false"/>
+                           <setting name="McuDisablePmcInit" value="false"/>
+                           <setting name="McuDisableRamWaitStatesConfig" value="false"/>
+                           <setting name="McuDisableFlashWaitStatesConfig" value="false"/>
+                           <array name="McuPrepareMemoryConfig"/>
+                           <setting name="McuTimeoutMethod" value="OSIF_COUNTER_DUMMY"/>
+                           <setting name="McuRegisterValuesOptimization" value="DISABLED"/>
+                           <array name="McuEcucPartitionRef"/>
+                           <struct name="McuControlledClocksConfiguration">
+                              <setting name="Name" value="McuControlledClocksConfiguration"/>
+                              <setting name="McuFxoscUnderMcuControl" value="true"/>
+                              <setting name="McuSxoscUnderMcuControl" value="true"/>
+                              <setting name="McuFircUnderMcuControl" value="true"/>
+                              <setting name="McuSircUnderMcuControl" value="true"/>
+                              <setting name="McuPll0UnderMcuControl" value="true"/>
+                           </struct>
+                        </struct>
+                        <struct name="McuDebugConfiguration">
+                           <setting name="Name" value="McuDebugConfiguration"/>
+                           <setting name="McuDisableDemReportErrorStatus" value="true"/>
+                           <setting name="McuGetSystemStateApi" value="false"/>
+                           <setting name="McuGetPowerModeStateApi" value="false"/>
+                           <setting name="McuGetPowerDomainApi" value="false"/>
+                           <setting name="McuSscmGetMemConfigApi" value="false"/>
+                           <setting name="McuSscmGetStatusApi" value="false"/>
+                           <setting name="McuSscmGetUoptApi" value="false"/>
+                           <setting name="McuGetMidrStructureApi" value="false"/>
+                           <setting name="McuDisableCmuApi" value="true"/>
+                           <setting name="McuEmiosConfigureGprenApi" value="false"/>
+                           <setting name="McuGetClockFrequencyApi" value="false"/>
+                        </struct>
+                        <struct name="McuCoreControlConfiguration">
+                           <setting name="Name" value="McuCoreControlConfiguration"/>
+                           <setting name="McuCoreBootAddressControl" value="false"/>
+                        </struct>
+                        <struct name="McuPublishedInformation">
+                           <setting name="Name" value="McuPublishedInformation"/>
+                           <array name="McuResetReasonConf">
+                              <struct name="0">
+                                 <setting name="Name" value="MCU_POWER_ON_RESET"/>
+                                 <setting name="McuResetReason" value="0"/>
+                              </struct>
+                              <struct name="1">
+                                 <setting name="Name" value="MCU_FCCU_FTR_RESET"/>
+                                 <setting name="McuResetReason" value="1"/>
+                              </struct>
+                              <struct name="2">
+                                 <setting name="Name" value="MCU_STCU_URF_RESET"/>
+                                 <setting name="McuResetReason" value="2"/>
+                              </struct>
+                              <struct name="3">
+                                 <setting name="Name" value="MCU_MC_RGM_FRE_RESET"/>
+                                 <setting name="McuResetReason" value="3"/>
+                              </struct>
+                              <struct name="4">
+                                 <setting name="Name" value="MCU_FXOSC_FAIL_RESET"/>
+                                 <setting name="McuResetReason" value="4"/>
+                              </struct>
+                              <struct name="5">
+                                 <setting name="Name" value="MCU_PLL_LOL_RESET"/>
+                                 <setting name="McuResetReason" value="5"/>
+                              </struct>
+                              <struct name="6">
+                                 <setting name="Name" value="MCU_CORE_CLK_FAIL_RESET"/>
+                                 <setting name="McuResetReason" value="6"/>
+                              </struct>
+                              <struct name="7">
+                                 <setting name="Name" value="MCU_AIPS_PLAT_CLK_FAIL_RESET"/>
+                                 <setting name="McuResetReason" value="7"/>
+                              </struct>
+                              <struct name="8">
+                                 <setting name="Name" value="MCU_HSE_CLK_FAIL_RESET"/>
+                                 <setting name="McuResetReason" value="8"/>
+                              </struct>
+                              <struct name="9">
+                                 <setting name="Name" value="MCU_SYS_DIV_FAIL_RESET"/>
+                                 <setting name="McuResetReason" value="9"/>
+                              </struct>
+                              <struct name="10">
+                                 <setting name="Name" value="MCU_CM7_CORE_CLK_FAIL_RESET"/>
+                                 <setting name="McuResetReason" value="10"/>
+                              </struct>
+                              <struct name="11">
+                                 <setting name="Name" value="MCU_HSE_TMPR_RST_RESET"/>
+                                 <setting name="McuResetReason" value="11"/>
+                              </struct>
+                              <struct name="12">
+                                 <setting name="Name" value="MCU_HSE_SNVS_RST_RESET"/>
+                                 <setting name="McuResetReason" value="12"/>
+                              </struct>
+                              <struct name="13">
+                                 <setting name="Name" value="MCU_SW_DEST_RESET"/>
+                                 <setting name="McuResetReason" value="13"/>
+                              </struct>
+                              <struct name="14">
+                                 <setting name="Name" value="MCU_DEBUG_DEST_RESET"/>
+                                 <setting name="McuResetReason" value="14"/>
+                              </struct>
+                              <struct name="15">
+                                 <setting name="Name" value="MCU_F_EXR_RESET"/>
+                                 <setting name="McuResetReason" value="15"/>
+                              </struct>
+                              <struct name="16">
+                                 <setting name="Name" value="MCU_FCCU_RST_RESET"/>
+                                 <setting name="McuResetReason" value="16"/>
+                              </struct>
+                              <struct name="17">
+                                 <setting name="Name" value="MCU_ST_DONE_RESET"/>
+                                 <setting name="McuResetReason" value="17"/>
+                              </struct>
+                              <struct name="18">
+                                 <setting name="Name" value="MCU_SWT0_RST_RESET"/>
+                                 <setting name="McuResetReason" value="18"/>
+                              </struct>
+                              <struct name="19">
+                                 <setting name="Name" value="MCU_SWT1_RST_RESET"/>
+                                 <setting name="McuResetReason" value="19"/>
+                              </struct>
+                              <struct name="20">
+                                 <setting name="Name" value="MCU_SWT2_RST_RESET"/>
+                                 <setting name="McuResetReason" value="20"/>
+                              </struct>
+                              <struct name="21">
+                                 <setting name="Name" value="MCU_JTAG_RST_RESET"/>
+                                 <setting name="McuResetReason" value="21"/>
+                              </struct>
+                              <struct name="22">
+                                 <setting name="Name" value="MCU_SWT3_RST_RESET"/>
+                                 <setting name="McuResetReason" value="22"/>
+                              </struct>
+                              <struct name="23">
+                                 <setting name="Name" value="MCU_PLL_AUX_RESET"/>
+                                 <setting name="McuResetReason" value="23"/>
+                              </struct>
+                              <struct name="24">
+                                 <setting name="Name" value="MCU_HSE_SWT_RST_RESET"/>
+                                 <setting name="McuResetReason" value="24"/>
+                              </struct>
+                              <struct name="25">
+                                 <setting name="Name" value="MCU_HSE_BOOT_RST_RESET"/>
+                                 <setting name="McuResetReason" value="25"/>
+                              </struct>
+                              <struct name="26">
+                                 <setting name="Name" value="MCU_SW_FUNC_RESET"/>
+                                 <setting name="McuResetReason" value="26"/>
+                              </struct>
+                              <struct name="27">
+                                 <setting name="Name" value="MCU_DEBUG_FUNC_RESET"/>
+                                 <setting name="McuResetReason" value="27"/>
+                              </struct>
+                              <struct name="28">
+                                 <setting name="Name" value="MCU_WAKEUP_REASON"/>
+                                 <setting name="McuResetReason" value="28"/>
+                              </struct>
+                              <struct name="29">
+                                 <setting name="Name" value="MCU_NO_RESET_REASON"/>
+                                 <setting name="McuResetReason" value="29"/>
+                              </struct>
+                              <struct name="30">
+                                 <setting name="Name" value="MCU_MULTIPLE_RESET_REASON"/>
+                                 <setting name="McuResetReason" value="30"/>
+                              </struct>
+                              <struct name="31">
+                                 <setting name="Name" value="MCU_RESET_UNDEFINED"/>
+                                 <setting name="McuResetReason" value="31"/>
+                              </struct>
+                           </array>
+                        </struct>
+                        <struct name="CommonPublishedInformation">
+                           <setting name="Name" value="CommonPublishedInformation"/>
+                        </struct>
+                        <struct name="McuModuleConfiguration">
+                           <setting name="Name" value="McuModuleConfiguration"/>
+                           <array name="McuResetSetting"/>
+                           <setting name="McuClockSrcFailureNotification" value="DISABLED"/>
+                           <array name="McuClockSettingConfig">
+                              <struct name="0">
+                                 <setting name="Name" value="McuClockSettingConfig_0"/>
+                                 <setting name="Configuration" value="ClockConfig0"/>
+                                 <array name="McuClockEcucPartitionRef"/>
+                                 <struct name="McuFIRC" quick_selection="Default">
+                                    <setting name="Name" value="McuFIRC"/>
+                                    <setting name="McuFircUnderMcuControl" value="true"/>
+                                    <setting name="McuFircDivSel" value="Div_by_1"/>
+                                    <setting name="McuFircStandbyEnable" value="false"/>
+                                 </struct>
+                                 <struct name="McuSIRC" quick_selection="Default">
+                                    <setting name="Name" value="McuSIRC"/>
+                                    <setting name="McuSircUnderMcuControl" value="true"/>
+                                    <setting name="McuSircStandbyEnable" value="false"/>
+                                 </struct>
+                                 <struct name="McuFXOSC" quick_selection="Default">
+                                    <setting name="Name" value="McuFXOSC"/>
+                                    <setting name="McuFxoscUnderMcuControl" value="true"/>
+                                    <setting name="McuFxoscPowerDownCtr" value="true"/>
+                                    <setting name="McuFxoscBypass" value="false"/>
+                                    <setting name="McuFxoscMainComparator" value="true"/>
+                                    <setting name="McuFxoscALCEnable" value="Enabled"/>
+                                 </struct>
+                                 <struct name="McuSXOSC" quick_selection="Default">
+                                    <setting name="Name" value="McuSXOSC"/>
+                                    <setting name="McuSxoscUnderMcuControl" value="true"/>
+                                    <setting name="McuSxoscPowerDownCtr" value="true"/>
+                                 </struct>
+                                 <struct name="McuCgm0SettingConfig" quick_selection="Default">
+                                    <setting name="Name" value="McuCgm0SettingConfig"/>
+                                    <array name="McuCgm0PcfsConfig">
+                                       <struct name="0">
+                                          <setting name="Name" value="McuCgm0PcfsConfig_0"/>
+                                          <setting name="McuClockPcfsUnderMcuControl" value="false"/>
+                                          <setting name="McuPCFS_Name" value="PCFS_8"/>
+                                       </struct>
+                                    </array>
+                                    <struct name="McuCgm0ClockMux0" quick_selection="Default">
+                                       <setting name="Name" value="McuCgm0ClockMux0"/>
+                                       <setting name="McuClockMuxUnderMcuControl" value="true"/>
+                                       <setting name="McuClkMux0_Source" value="PLL_PHI0_CLK"/>
+                                       <setting name="McuClkMux0Div0_En" value="true"/>
+                                       <setting name="McuClkMux0Div0Trigger" value="COMMON_TRIGGER_DIVIDER_UPDATE"/>
+                                       <setting name="McuClkMux0Div1_En" value="true"/>
+                                       <setting name="McuClkMux0Div1Trigger" value="COMMON_TRIGGER_DIVIDER_UPDATE"/>
+                                       <setting name="McuClkMux0Div2_En" value="true"/>
+                                       <setting name="McuClkMux0Div2Trigger" value="COMMON_TRIGGER_DIVIDER_UPDATE"/>
+                                       <setting name="McuClkMux0Div3_En" value="true"/>
+                                       <setting name="McuClkMux0Div3Trigger" value="COMMON_TRIGGER_DIVIDER_UPDATE"/>
+                                       <setting name="McuClkMux0Div4_En" value="true"/>
+                                       <setting name="McuClkMux0Div4Trigger" value="COMMON_TRIGGER_DIVIDER_UPDATE"/>
+                                    </struct>
+                                    <struct name="McuCgm0ClockMux1" quick_selection="Default">
+                                       <setting name="Name" value="McuCgm0ClockMux1"/>
+                                       <setting name="McuClockMuxUnderMcuControl" value="true"/>
+                                       <setting name="McuClkMux1_Source" value="FIRC_CLK"/>
+                                       <setting name="McuClkMux1Div0_En" value="true"/>
+                                    </struct>
+                                    <struct name="McuCgm0ClockMux3" quick_selection="Default">
+                                       <setting name="Name" value="McuCgm0ClockMux3"/>
+                                       <setting name="McuClockMuxUnderMcuControl" value="true"/>
+                                       <setting name="McuClkMux3_Source" value="FIRC_CLK"/>
+                                       <setting name="McuClkMux3Div0_En" value="true"/>
+                                    </struct>
+                                    <struct name="McuCgm0ClockMux4" quick_selection="Default">
+                                       <setting name="Name" value="McuCgm0ClockMux4"/>
+                                       <setting name="McuClockMuxUnderMcuControl" value="true"/>
+                                       <setting name="McuClkMux4_Source" value="FIRC_CLK"/>
+                                       <setting name="McuClkMux4Div0_En" value="true"/>
+                                    </struct>
+                                    <struct name="McuCgm0ClockMux5" quick_selection="Default">
+                                       <setting name="Name" value="McuCgm0ClockMux5"/>
+                                       <setting name="McuClockMuxUnderMcuControl" value="true"/>
+                                       <setting name="McuClkMux5_Source" value="FIRC_CLK"/>
+                                       <setting name="McuClkMux5Div0_En" value="true"/>
+                                    </struct>
+                                    <struct name="McuCgm0ClockMux6" quick_selection="Default">
+                                       <setting name="Name" value="McuCgm0ClockMux6"/>
+                                       <setting name="McuClockMuxUnderMcuControl" value="true"/>
+                                       <setting name="McuClkMux6_Source" value="FXOSC_CLK"/>
+                                       <setting name="McuClkMux6Div0_En" value="true"/>
+                                    </struct>
+                                    <struct name="McuCgm0ClockMux11" quick_selection="Default">
+                                       <setting name="Name" value="McuCgm0ClockMux11"/>
+                                       <setting name="McuClockMuxUnderMcuControl" value="true"/>
+                                       <setting name="McuClkMux11_Source" value="FIRC_CLK"/>
+                                       <setting name="McuClkMux11Div0_En" value="true"/>
+                                    </struct>
+                                 </struct>
+                                 <struct name="McuRtcClockSelect" quick_selection="Default">
+                                    <setting name="Name" value="McuRtcClockSelect"/>
+                                    <setting name="McuClockMuxUnderMcuControl" value="true"/>
+                                    <setting name="McuRtc_Source" value="SXOSC_CLK"/>
+                                 </struct>
+                                 <struct name="McuPll_0" quick_selection="Default">
+                                    <setting name="Name" value="McuPll_0"/>
+                                    <setting name="McuPLLUnderMcuControl" value="true"/>
+                                    <setting name="McuPLLEnabled" value="true"/>
+                                    <setting name="McuPllClockSelection" value="FXOSC_CLK"/>
+                                    <struct name="McuPll_Configuration" quick_selection="Default">
+                                       <setting name="Name" value="McuPll_Configuration"/>
+                                       <setting name="McuPllFmSscgbyp" value="true"/>
+                                       <setting name="McuPllFmSpreadctl" value="Down_Spread"/>
+                                       <setting name="McuPllFdSdmen" value="false"/>
+                                       <setting name="McuPllFdSdm2" value="false"/>
+                                       <setting name="McuPllFdSdm3" value="false"/>
+                                       <setting name="McuPllOdiv0_En" value="true"/>
+                                       <setting name="McuPllOdiv1_En" value="true"/>
+                                    </struct>
+                                    <struct name="McuPll_Parameter" quick_selection="Default">
+                                       <setting name="Name" value="McuPll_Parameter"/>
+                                    </struct>
+                                 </struct>
+                                 <array name="McuClkMonitor">
+                                    <struct name="0">
+                                       <setting name="Name" value="McuClkMonitor_0"/>
+                                       <setting name="McuClockMonitorUnderMcuControl" value="true"/>
+                                       <setting name="McuCmuName" value="CMU_FC_0_FXOSC_CLK"/>
+                                       <setting name="McuClkMonitorEn" value="false"/>
+                                       <setting name="McuFHHAsyncEventEn" value="false"/>
+                                       <setting name="McuFLLAsyncEventEn" value="false"/>
+                                       <setting name="McuFHHInterruptEn" value="false"/>
+                                       <setting name="McuFLLInterruptEn" value="false"/>
+                                       <setting name="McuClockMonitorDeviation" value="Maximum_5_percentage_deviation"/>
+                                       <setting name="McuClockMonitorLatency" value="Lowest_Latency"/>
+                                    </struct>
+                                    <struct name="1">
+                                       <setting name="Name" value="McuClkMonitor_1"/>
+                                       <setting name="McuClockMonitorUnderMcuControl" value="true"/>
+                                       <setting name="McuCmuName" value="CMU_FC_3_CORE_CLK"/>
+                                       <setting name="McuClkMonitorEn" value="false"/>
+                                       <setting name="McuFHHAsyncEventEn" value="false"/>
+                                       <setting name="McuFLLAsyncEventEn" value="false"/>
+                                       <setting name="McuFHHInterruptEn" value="false"/>
+                                       <setting name="McuFLLInterruptEn" value="false"/>
+                                       <setting name="McuClockMonitorDeviation" value="Maximum_5_percentage_deviation"/>
+                                       <setting name="McuClockMonitorLatency" value="Lowest_Latency"/>
+                                    </struct>
+                                    <struct name="2">
+                                       <setting name="Name" value="McuClkMonitor_2"/>
+                                       <setting name="McuClockMonitorUnderMcuControl" value="true"/>
+                                       <setting name="McuCmuName" value="CMU_FC_4_AIPS_PLAT_CLK"/>
+                                       <setting name="McuClkMonitorEn" value="false"/>
+                                       <setting name="McuFHHAsyncEventEn" value="false"/>
+                                       <setting name="McuFLLAsyncEventEn" value="false"/>
+                                       <setting name="McuFHHInterruptEn" value="false"/>
+                                       <setting name="McuFLLInterruptEn" value="false"/>
+                                       <setting name="McuClockMonitorDeviation" value="Maximum_5_percentage_deviation"/>
+                                       <setting name="McuClockMonitorLatency" value="Lowest_Latency"/>
+                                    </struct>
+                                 </array>
+                                 <array name="McuClockReferencePoint">
+                                    <struct name="0">
+                                       <setting name="Name" value="McuClockReferencePoint_0"/>
+                                       <setting name="McuClockFrequencySelect" value="CORE_CLK"/>
+                                    </struct>
+                                 </array>
+                              </struct>
+                           </array>
+                           <array name="McuDemEventParameterRefs"/>
+                           <array name="McuModeSettingConf">
+                              <struct name="0">
+                                 <setting name="Name" value="McuModeSettingConf_0"/>
+                                 <setting name="McuMode" value="0"/>
+                                 <setting name="McuPowerMode" value="RUN"/>
+                                 <setting name="McuMainCoreSelect" value="CM7_0"/>
+                                 <setting name="McuCoreLockStepEnable" value="false"/>
+                                 <setting name="McuEnableSleepOnExit" value="false"/>
+                                 <array name="McuPowerEcucPartitionRef"/>
+                                 <struct name="McuPartitionConfiguration">
+                                    <setting name="Name" value="McuPartitionConfiguration"/>
+                                    <struct name="McuPartition0Config">
+                                       <setting name="Name" value="McuPartition0Config"/>
+                                       <setting name="McuPartitionUnderMcuControl" value="true"/>
+                                       <setting name="McuPartitionPowerUnderMcuControl" value="true"/>
+                                       <setting name="McuPrtnCofb1UnderMcuControl" value="true"/>
+                                       <setting name="McuPartitionClockEnable" value="true"/>
+                                       <struct name="McuCore0Configuration">
+                                          <setting name="Name" value="McuCore0Configuration"/>
+                                          <setting name="McuCoreUnderMcuControl" value="true"/>
+                                          <setting name="McuCoreClockEnable" value="false"/>
+                                          <setting name="McuCoreBootAddress" value="0"/>
+                                          <setting name="McuCoreBootAddressLinkerSym" value=""/>
+                                       </struct>
+                                    </struct>
+                                    <struct name="McuPartition1Config">
+                                       <setting name="Name" value="McuPartition1Config"/>
+                                       <setting name="McuPartitionUnderMcuControl" value="true"/>
+                                       <setting name="McuPartitionPowerUnderMcuControl" value="true"/>
+                                       <setting name="McuPrtnCofb0UnderMcuControl" value="true"/>
+                                       <setting name="McuPrtnCofb1UnderMcuControl" value="true"/>
+                                       <setting name="McuPrtnCofb2UnderMcuControl" value="true"/>
+                                       <setting name="McuPrtnCofb3UnderMcuControl" value="true"/>
+                                       <setting name="McuPartitionClockEnable" value="true"/>
+                                    </struct>
+                                    <array name="McuPeripheral">
+                                       <struct name="0">
+                                          <setting name="Name" value="McuPeripheral_0"/>
+                                          <setting name="McuPeripheralName" value="TRGMUX"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN0_COFB1_REQ32"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="1">
+                                          <setting name="Name" value="McuPeripheral_1"/>
+                                          <setting name="McuPeripheralName" value="BCTU"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN0_COFB1_REQ33"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="2">
+                                          <setting name="Name" value="McuPeripheral_2"/>
+                                          <setting name="McuPeripheralName" value="EMIOS_0"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN0_COFB1_REQ34"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="3">
+                                          <setting name="Name" value="McuPeripheral_3"/>
+                                          <setting name="McuPeripheralName" value="EMIOS_1"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN0_COFB1_REQ35"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="4">
+                                          <setting name="Name" value="McuPeripheral_4"/>
+                                          <setting name="McuPeripheralName" value="LCU_0"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN0_COFB1_REQ38"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="5">
+                                          <setting name="Name" value="McuPeripheral_5"/>
+                                          <setting name="McuPeripheralName" value="LCU_1"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN0_COFB1_REQ39"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="6">
+                                          <setting name="Name" value="McuPeripheral_6"/>
+                                          <setting name="McuPeripheralName" value="ADC_0"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN0_COFB1_REQ40"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="7">
+                                          <setting name="Name" value="McuPeripheral_7"/>
+                                          <setting name="McuPeripheralName" value="ADC_1"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN0_COFB1_REQ41"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="8">
+                                          <setting name="Name" value="McuPeripheral_8"/>
+                                          <setting name="McuPeripheralName" value="PIT_0"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN0_COFB1_REQ44"/>
+                                          <setting name="McuPeripheralClockEnable" value="true"/>
+                                       </struct>
+                                       <struct name="9">
+                                          <setting name="Name" value="McuPeripheral_9"/>
+                                          <setting name="McuPeripheralName" value="PIT_1"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN0_COFB1_REQ45"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="10">
+                                          <setting name="Name" value="McuPeripheral_10"/>
+                                          <setting name="McuPeripheralName" value="EDMA"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB0_REQ3"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="11">
+                                          <setting name="Name" value="McuPeripheral_11"/>
+                                          <setting name="McuPeripheralName" value="EDMA_TCD_0"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB0_REQ4"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="12">
+                                          <setting name="Name" value="McuPeripheral_12"/>
+                                          <setting name="McuPeripheralName" value="EDMA_TCD_1"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB0_REQ5"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="13">
+                                          <setting name="Name" value="McuPeripheral_13"/>
+                                          <setting name="McuPeripheralName" value="EDMA_TCD_2"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB0_REQ6"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="14">
+                                          <setting name="Name" value="McuPeripheral_14"/>
+                                          <setting name="McuPeripheralName" value="EDMA_TCD_3"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB0_REQ7"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="15">
+                                          <setting name="Name" value="McuPeripheral_15"/>
+                                          <setting name="McuPeripheralName" value="EDMA_TCD_4"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB0_REQ8"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="16">
+                                          <setting name="Name" value="McuPeripheral_16"/>
+                                          <setting name="McuPeripheralName" value="EDMA_TCD_5"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB0_REQ9"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="17">
+                                          <setting name="Name" value="McuPeripheral_17"/>
+                                          <setting name="McuPeripheralName" value="EDMA_TCD_6"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB0_REQ10"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="18">
+                                          <setting name="Name" value="McuPeripheral_18"/>
+                                          <setting name="McuPeripheralName" value="EDMA_TCD_7"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB0_REQ11"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="19">
+                                          <setting name="Name" value="McuPeripheral_19"/>
+                                          <setting name="McuPeripheralName" value="EDMA_TCD_8"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB0_REQ12"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="20">
+                                          <setting name="Name" value="McuPeripheral_20"/>
+                                          <setting name="McuPeripheralName" value="EDMA_TCD_9"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB0_REQ13"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="21">
+                                          <setting name="Name" value="McuPeripheral_21"/>
+                                          <setting name="McuPeripheralName" value="EDMA_TCD_10"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB0_REQ14"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="22">
+                                          <setting name="Name" value="McuPeripheral_22"/>
+                                          <setting name="McuPeripheralName" value="EDMA_TCD_11"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB0_REQ15"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="23">
+                                          <setting name="Name" value="McuPeripheral_23"/>
+                                          <setting name="McuPeripheralName" value="SDA_AP"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB0_REQ21"/>
+                                          <setting name="McuPeripheralClockEnable" value="true"/>
+                                       </struct>
+                                       <struct name="24">
+                                          <setting name="Name" value="McuPeripheral_24"/>
+                                          <setting name="McuPeripheralName" value="EIM_0"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB0_REQ22"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="25">
+                                          <setting name="Name" value="McuPeripheral_25"/>
+                                          <setting name="McuPeripheralName" value="ERM_0"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB0_REQ23"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="26">
+                                          <setting name="Name" value="McuPeripheral_26"/>
+                                          <setting name="McuPeripheralName" value="MSCM"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB0_REQ24"/>
+                                          <setting name="McuPeripheralClockEnable" value="true"/>
+                                       </struct>
+                                       <struct name="27">
+                                          <setting name="Name" value="McuPeripheral_27"/>
+                                          <setting name="McuPeripheralName" value="SWT_0"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB0_REQ28"/>
+                                          <setting name="McuPeripheralClockEnable" value="true"/>
+                                       </struct>
+                                       <struct name="28">
+                                          <setting name="Name" value="McuPeripheral_28"/>
+                                          <setting name="McuPeripheralName" value="STM_0"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB0_REQ29"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="29">
+                                          <setting name="Name" value="McuPeripheral_29"/>
+                                          <setting name="McuPeripheralName" value="INTM"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB0_REQ31"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="30">
+                                          <setting name="Name" value="McuPeripheral_30"/>
+                                          <setting name="McuPeripheralName" value="DMAMUX_0"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB1_REQ32"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="31">
+                                          <setting name="Name" value="McuPeripheral_31"/>
+                                          <setting name="McuPeripheralName" value="DMAMUX_1"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB1_REQ33"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="32">
+                                          <setting name="Name" value="McuPeripheral_32"/>
+                                          <setting name="McuPeripheralName" value="RTC"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB1_REQ34"/>
+                                          <setting name="McuPeripheralClockEnable" value="true"/>
+                                       </struct>
+                                       <struct name="33">
+                                          <setting name="Name" value="McuPeripheral_33"/>
+                                          <setting name="McuPeripheralName" value="SIUL2_VIRTWRAPPER_PDAC3"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB1_REQ42"/>
+                                          <setting name="McuPeripheralClockEnable" value="true"/>
+                                       </struct>
+                                       <struct name="34">
+                                          <setting name="Name" value="McuPeripheral_34"/>
+                                          <setting name="McuPeripheralName" value="WKPU"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB1_REQ45"/>
+                                          <setting name="McuPeripheralClockEnable" value="true"/>
+                                       </struct>
+                                       <struct name="35">
+                                          <setting name="Name" value="McuPeripheral_35"/>
+                                          <setting name="McuPeripheralName" value="CMUs"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB1_REQ47"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="36">
+                                          <setting name="Name" value="McuPeripheral_36"/>
+                                          <setting name="McuPeripheralName" value="TSPC"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB1_REQ49"/>
+                                          <setting name="McuPeripheralClockEnable" value="true"/>
+                                       </struct>
+                                       <struct name="37">
+                                          <setting name="Name" value="McuPeripheral_37"/>
+                                          <setting name="McuPeripheralName" value="SXOSC"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB1_REQ51"/>
+                                          <setting name="McuPeripheralClockEnable" value="true"/>
+                                       </struct>
+                                       <struct name="38">
+                                          <setting name="Name" value="McuPeripheral_38"/>
+                                          <setting name="McuPeripheralName" value="FXOSC"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB1_REQ53"/>
+                                          <setting name="McuPeripheralClockEnable" value="true"/>
+                                       </struct>
+                                       <struct name="39">
+                                          <setting name="Name" value="McuPeripheral_39"/>
+                                          <setting name="McuPeripheralName" value="PLL"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB1_REQ56"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="40">
+                                          <setting name="Name" value="McuPeripheral_40"/>
+                                          <setting name="McuPeripheralName" value="FlexCAN_0"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB2_REQ65"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="41">
+                                          <setting name="Name" value="McuPeripheral_41"/>
+                                          <setting name="McuPeripheralName" value="FlexCAN_1"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB2_REQ66"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="42">
+                                          <setting name="Name" value="McuPeripheral_42"/>
+                                          <setting name="McuPeripheralName" value="FlexCAN_2"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB2_REQ67"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="43">
+                                          <setting name="Name" value="McuPeripheral_43"/>
+                                          <setting name="McuPeripheralName" value="FlexCAN_3"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB2_REQ68"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="44">
+                                          <setting name="Name" value="McuPeripheral_44"/>
+                                          <setting name="McuPeripheralName" value="FlexCAN_4"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB2_REQ69"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="45">
+                                          <setting name="Name" value="McuPeripheral_45"/>
+                                          <setting name="McuPeripheralName" value="FlexCAN_5"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB2_REQ70"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="46">
+                                          <setting name="Name" value="McuPeripheral_46"/>
+                                          <setting name="McuPeripheralName" value="FlexIO"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB2_REQ73"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="47">
+                                          <setting name="Name" value="McuPeripheral_47"/>
+                                          <setting name="McuPeripheralName" value="LPUART_0"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB2_REQ74"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="48">
+                                          <setting name="Name" value="McuPeripheral_48"/>
+                                          <setting name="McuPeripheralName" value="LPUART_1"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB2_REQ75"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="49">
+                                          <setting name="Name" value="McuPeripheral_49"/>
+                                          <setting name="McuPeripheralName" value="LPUART_2"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB2_REQ76"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="50">
+                                          <setting name="Name" value="McuPeripheral_50"/>
+                                          <setting name="McuPeripheralName" value="LPUART_3"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB2_REQ77"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="51">
+                                          <setting name="Name" value="McuPeripheral_51"/>
+                                          <setting name="McuPeripheralName" value="LPUART_4"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB2_REQ78"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="52">
+                                          <setting name="Name" value="McuPeripheral_52"/>
+                                          <setting name="McuPeripheralName" value="LPUART_5"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB2_REQ79"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="53">
+                                          <setting name="Name" value="McuPeripheral_53"/>
+                                          <setting name="McuPeripheralName" value="LPUART_6"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB2_REQ80"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="54">
+                                          <setting name="Name" value="McuPeripheral_54"/>
+                                          <setting name="McuPeripheralName" value="LPUART_7"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB2_REQ81"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="55">
+                                          <setting name="Name" value="McuPeripheral_55"/>
+                                          <setting name="McuPeripheralName" value="LPI2C_0"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB2_REQ84"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="56">
+                                          <setting name="Name" value="McuPeripheral_56"/>
+                                          <setting name="McuPeripheralName" value="LPI2C_1"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB2_REQ85"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="57">
+                                          <setting name="Name" value="McuPeripheral_57"/>
+                                          <setting name="McuPeripheralName" value="LPSPI_0"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB2_REQ86"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="58">
+                                          <setting name="Name" value="McuPeripheral_58"/>
+                                          <setting name="McuPeripheralName" value="LPSPI_1"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB2_REQ87"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="59">
+                                          <setting name="Name" value="McuPeripheral_59"/>
+                                          <setting name="McuPeripheralName" value="LPSPI_2"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB2_REQ88"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="60">
+                                          <setting name="Name" value="McuPeripheral_60"/>
+                                          <setting name="McuPeripheralName" value="LPSPI_3"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB2_REQ89"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="61">
+                                          <setting name="Name" value="McuPeripheral_61"/>
+                                          <setting name="McuPeripheralName" value="LPCMP_0"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB2_REQ92"/>
+                                          <setting name="McuPeripheralClockEnable" value="true"/>
+                                       </struct>
+                                       <struct name="62">
+                                          <setting name="Name" value="McuPeripheral_62"/>
+                                          <setting name="McuPeripheralName" value="LPCMP_1"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB2_REQ93"/>
+                                          <setting name="McuPeripheralClockEnable" value="true"/>
+                                       </struct>
+                                       <struct name="63">
+                                          <setting name="Name" value="McuPeripheral_63"/>
+                                          <setting name="McuPeripheralName" value="TEMPSENSE"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB2_REQ95"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="64">
+                                          <setting name="Name" value="McuPeripheral_64"/>
+                                          <setting name="McuPeripheralName" value="CRC"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB3_REQ96"/>
+                                          <setting name="McuPeripheralClockEnable" value="false"/>
+                                       </struct>
+                                       <struct name="65">
+                                          <setting name="Name" value="McuPeripheral_65"/>
+                                          <setting name="McuPeripheralName" value="STCU_2"/>
+                                          <setting name="McuModeEntrySlot" value="PRTN1_COFB3_REQ104"/>
+                                          <setting name="McuPeripheralClockEnable" value="true"/>
+                                       </struct>
+                                    </array>
+                                 </struct>
+                                 <struct name="McuDcmGprConfiguration">
+                                    <setting name="Name" value="McuDcmGprConfiguration"/>
+                                    <setting name="McuDcmGprUnderMcuControl" value="false"/>
+                                    <setting name="McuBootBaseAddress" value="0"/>
+                                    <setting name="McuPMC_TRIM_RGM_DCF_BYP_STDBY_EXTControl" value="false"/>
+                                    <setting name="McuFIRC_TRIM_BYP_STDBY_EXTControl" value="false"/>
+                                    <setting name="McuDCM_SCAN_BYP_STDBY_EXTControl" value="false"/>
+                                    <setting name="McuGlobalPadkeepingEnable" value="false"/>
+                                 </struct>
+                              </struct>
+                           </array>
+                           <array name="McuRamSectorSettingConf"/>
+                           <struct name="McuResetConfig">
+                              <setting name="Name" value="McuResetConfig"/>
+                              <setting name="McuResetType" value="FunctionalReset"/>
+                              <setting name="McuFuncResetEscThreshold" value="15"/>
+                              <setting name="McuDestResetEscThreshold" value="0"/>
+                              <struct name="McuResetSourcesConfig">
+                                 <setting name="Name" value="McuResetSourcesConfig"/>
+                                 <struct name="McuFCCU_RST_ResetSource">
+                                    <setting name="Name" value="McuFCCU_RST_ResetSource"/>
+                                    <setting name="McuDisableReset" value="false"/>
+                                 </struct>
+                                 <struct name="McuSWT0_RST_ResetSource">
+                                    <setting name="Name" value="McuSWT0_RST_ResetSource"/>
+                                    <setting name="McuDisableReset" value="false"/>
+                                 </struct>
+                                 <struct name="McuJTAG_RST_ResetSource">
+                                    <setting name="Name" value="McuJTAG_RST_ResetSource"/>
+                                    <setting name="McuDisableReset" value="false"/>
+                                 </struct>
+                                 <struct name="McuDEBUG_FUNC_ResetSource">
+                                    <setting name="Name" value="McuDEBUG_FUNC_ResetSource"/>
+                                    <setting name="McuDisableReset" value="false"/>
+                                 </struct>
+                              </struct>
+                           </struct>
+                           <struct name="McuPowerControl">
+                              <setting name="Name" value="McuPowerControl"/>
+                              <struct name="McuPMC_Config">
+                                 <setting name="Name" value="McuPMC_Config"/>
+                                 <setting name="McuLVDIEEnable" value="false"/>
+                                 <setting name="McuHVDIEEnable" value="false"/>
+                                 <setting name="McuLPM25ENEnable" value="false"/>
+                                 <setting name="McuFASTRECEnable" value="false"/>
+                              </struct>
+                           </struct>
+                        </struct>
+                     </config_set>
+                  </instance>
+				</instances>
+            </functional_group>
+         </functional_groups>
+         <components>
+            <component name="system" uuid="dad901f7-0eee-486e-b501-0915a8dc0834" type_id="system">
+               <config_set_global name="SystemModel" quick_selection="Default">
+                  <setting name="Name" value="SystemModel"/>
+                  <setting name="EcvdGenerationMethod" value="INDIVIDUAL"/>
+                  <setting name="EcvdOutputPath" value=""/>
+                  <setting name="EcvdGenerationTrigger" value="Generate Configuration"/>
+                  <setting name="SyncFunctionalGroups" value="true"/>
+                  <setting name="IgnoreComponentSuffix" value="true"/>
+                  <setting name="ComponentGenerationMethod" value="EcucPostBuildVariants"/>
+                  <setting name="DefaultFunctionalGroup" value="BOARD_InitPeripherals"/>
+                  <struct name="PostBuildSelectable" quick_selection="Default">
+                     <setting name="Name" value="PostBuildSelectable"/>
+                     <array name="PredefinedVariants">
+                        <struct name="0">
+                           <setting name="Name" value="BOARD_InitPeripherals"/>
+                           <setting name="Path" value="/system/SystemModel/PostBuildSelectable/BOARD_InitPeripherals"/>
+                           <array name="PostBuildVariantCriterionValues"/>
+                        </struct>
+                     </array>
+                  </struct>
+                  <struct name="Criterions" quick_selection="Default">
+                     <setting name="Name" value="Criterions"/>
+                     <array name="PostBuildVariantCriterions"/>
+                  </struct>
+               </config_set_global>
+            </component>
+         </components>
+      </periphs>
+      <serdes name="SERDES" version="1.0" enabled="false" update_project_code="true">
+         <components/>
+      </serdes>
+   </tools>
+</configuration>

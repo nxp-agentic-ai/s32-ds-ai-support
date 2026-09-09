@@ -1,0 +1,89 @@
+[
+  {
+    "board_id": "SAMPLE_DATASET_BOARD",
+    "image_path": "C:\\Users\\nxf94919\\Documents\\mcp-server-vision\\board-config-mcp\\boards\\SAMPLE_DATASET_BOARD\\images\\sample_board_generated.png",
+    "kind": "board_reference",
+    "bbox": null
+  },
+  {
+    "board_id": "SAMPLE_DATASET_BOARD",
+    "image_path": "C:\\Users\\nxf94919\\Documents\\mcp-server-vision\\board-config-mcp\\boards\\SAMPLE_DATASET_BOARD\\images\\sample_board_generated.png",
+    "kind": "roi_reference",
+    "bbox": [
+      610,
+      340,
+      60,
+      50
+    ],
+    "roi_id": "JP3",
+    "label": "JP3",
+    "component_type": "jumper"
+  },
+  {
+    "board_id": "SAMPLE_DATASET_BOARD",
+    "image_path": "C:\\Users\\nxf94919\\Documents\\mcp-server-vision\\board-config-mcp\\boards\\SAMPLE_DATASET_BOARD\\images\\sample_board_generated.png",
+    "kind": "roi_reference",
+    "bbox": [
+      520,
+      210,
+      80,
+      50
+    ],
+    "roi_id": "SW1_1",
+    "label": "SW1.1",
+    "component_type": "dip_switch"
+  },
+  {
+    "board_id": "SAMPLE_DATASET_BOARD",
+    "image_path": "C:\\Users\\nxf94919\\Documents\\mcp-server-vision\\board-config-mcp\\boards\\SAMPLE_DATASET_BOARD\\images\\sample_board_generated.png",
+    "kind": "board_reference",
+    "bbox": null
+  },
+  {
+    "board_id": "SAMPLE_DATASET_BOARD",
+    "image_path": "C:\\Users\\nxf94919\\Documents\\mcp-server-vision\\board-config-mcp\\boards\\SAMPLE_DATASET_BOARD\\images\\sample_board_generated.png",
+    "kind": "roi_reference",
+    "bbox": [
+      520,
+      210,
+      80,
+      50
+    ],
+    "roi_id": "SW1_1",
+    "label": "SW1.1"
+  },
+  {
+    "board_id": "SAMPLE_DATASET_BOARD",
+    "image_path": "C:\\Users\\nxf94919\\Documents\\mcp-server-vision\\board-config-mcp\\boards\\SAMPLE_DATASET_BOARD\\images\\sample_board_generated.png",
+    "kind": "board_reference",
+    "bbox": null
+  },
+  {
+    "board_id": "SAMPLE_DATASET_BOARD",
+    "image_path": "C:\\Users\\nxf94919\\Documents\\mcp-server-vision\\board-config-mcp\\boards\\SAMPLE_DATASET_BOARD\\images\\sample_board_generated.png",
+    "kind": "roi_reference",
+    "bbox": [
+      610,
+      340,
+      60,
+      50
+    ],
+    "roi_id": "JP3",
+    "label": "JP3",
+    "component_type": "jumper"
+  },
+  {
+    "board_id": "SAMPLE_DATASET_BOARD",
+    "image_path": "C:\\Users\\nxf94919\\Documents\\mcp-server-vision\\board-config-mcp\\boards\\SAMPLE_DATASET_BOARD\\images\\sample_board_generated.png",
+    "kind": "roi_reference",
+    "bbox": [
+      520,
+      210,
+      80,
+      50
+    ],
+    "roi_id": "SW1_1",
+    "label": "SW1.1",
+    "component_type": "dip_switch"
+  }
+]

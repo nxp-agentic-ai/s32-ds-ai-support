@@ -1,0 +1,650 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Board ROI Editor</title>
+  <style>
+    body { margin: 0; font-family: Arial, sans-serif; background:#111; color:#eee; }
+    .layout { display:grid; grid-template-columns: 420px 1fr; height:100vh; }
+    .sidebar { padding:16px; border-right:1px solid #333; overflow:auto; background:#1a1a1a; }
+    .main { display:flex; flex-direction:column; min-width:0; }
+    .toolbar { padding:10px; border-bottom:1px solid #333; display:flex; gap:8px; align-items:center; flex-wrap:wrap; background:#181818; }
+    .canvas-wrap { flex:1; overflow:hidden; position:relative; background:#101010; }
+    canvas { display:block; width:100%; height:100%; cursor:crosshair; background:#202020; }
+    label { display:block; margin-top:10px; font-size:12px; color:#ccc; }
+    input, select, button, textarea { width:100%; box-sizing:border-box; padding:8px; margin-top:4px; border-radius:6px; border:1px solid #444; background:#222; color:#eee; }
+    button { cursor:pointer; }
+    .toolbar button { width:auto; margin-top:0; }
+    .row { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+    .row3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; }
+    .list { margin-top:12px; border-top:1px solid #333; padding-top:12px; }
+    .roi-item { border:1px solid #333; border-radius:8px; padding:8px; margin-top:8px; background:#151515; }
+    .hint { font-size:12px; color:#aaa; white-space:pre-wrap; }
+    .ok { color:#7bd88f; }
+    .warn { color:#ffd866; }
+    .toolbar-stat { font-size:12px; color:#bbb; padding:4px 8px; border:1px solid #333; border-radius:6px; }
+    .panel { margin-top:12px; padding-top:8px; border-top:1px solid #333; }
+    table { width:100%; border-collapse: collapse; margin-top: 8px; }
+    td, th { border:1px solid #333; padding:6px; font-size:12px; }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <div class="sidebar">
+      <h2>Board ROI Editor</h2>
+      <label>Backend URL<input id="backendUrl" value="http://127.0.0.1:8010" /></label>
+      <div class="row3">
+        <button id="checkBackendBtn">Check</button>
+        <button id="refreshBoardsBtn">Refresh</button>
+        <button id="reloadBoardBtn">Reload</button>
+      </div>
+      <label>Available Boards<select id="boardSelect"><option value="">-- choose board --</option></select></label>
+      <div class="row">
+        <button id="loadSelectedBtn">Load Selected</button>
+        <button id="loadBoardBtn">Load By ID</button>
+      </div>
+      <label>Board ID<input id="boardId" value="S32N79-RDB" /></label>
+      <label>Board Name<input id="boardName" value="S32N79-RDB" /></label>
+      <label>Reference Image Path on Disk<input id="referenceImagePath" value="boards\S32N79-RDB\images\S32N79_RDB_TOP.png" /></label>
+      <label>Preview Image<input id="imageInput" type="file" accept="image/*" /></label>
+      <div class="row">
+        <button id="saveBoardBtn">Save Board + ROIs</button>
+        <button id="exportTemplateBtn">Export Template</button>
+      </div>
+
+      <div class="panel">
+        <label>ROI ID<input id="roiId" value="ROI_1" /></label>
+        <label>ROI Label<input id="roiLabel" value="ROI 1" /></label>
+        <label>ROI Type
+          <select id="roiType">
+            <option value="generic_roi">generic_roi</option>
+            <option value="jumper_2pin">jumper_2pin</option>
+            <option value="jumper_3pin">jumper_3pin</option>
+            <option value="dip_switch_group">dip_switch_group</option>
+          </select>
+        </label>
+        <label>Orientation
+          <select id="orientation">
+            <option value="unknown">unknown</option>
+            <option value="horizontal">horizontal</option>
+            <option value="vertical">vertical</option>
+          </select>
+        </label>
+        <label>Notes<textarea id="roiNotes" rows="2"></textarea></label>
+      </div>
+
+      <div class="panel">
+        <h3>Common detection</h3>
+        <label>Detection Method<input id="detectionMethod" value="aligned_crop" /></label>
+        <div class="row">
+          <label><input id="rotationInvariant" type="checkbox" checked /> Rotation invariant</label>
+          <label><input id="scaleInvariant" type="checkbox" checked /> Scale invariant</label>
+        </div>
+      </div>
+
+      <div class="panel" id="jumperPanel" style="display:none;">
+        <h3>Jumper settings</h3>
+        <label>Pin numbering scheme
+          <select id="pinScheme">
+            <option value="left_to_right">left_to_right</option>
+            <option value="right_to_left">right_to_left</option>
+            <option value="top_to_bottom">top_to_bottom</option>
+            <option value="bottom_to_top">bottom_to_top</option>
+          </select>
+        </label>
+        <label>Pin 1 side
+          <select id="pin1Side">
+            <option value="left">left</option>
+            <option value="right">right</option>
+            <option value="top">top</option>
+            <option value="bottom">bottom</option>
+          </select>
+        </label>
+        <label>Expected default
+          <select id="jumperExpected">
+            <option value="PRESENT">PRESENT</option>
+            <option value="ABSENT">ABSENT</option>
+            <option value="1-2">1-2</option>
+            <option value="2-3">2-3</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="panel" id="dipPanel" style="display:none;">
+        <h3>DIP switch group</h3>
+        <div class="row">
+          <label>Switch count<input id="switchCount" type="number" min="1" value="10" /></label>
+          <label>Layout
+            <select id="dipLayout">
+              <option value="single_column">single_column</option>
+              <option value="single_row">single_row</option>
+            </select>
+          </label>
+        </div>
+        <div class="row">
+          <label>Position 1 at
+            <select id="position1At">
+              <option value="top">top</option>
+              <option value="bottom">bottom</option>
+              <option value="left">left</option>
+              <option value="right">right</option>
+            </select>
+          </label>
+          <label>Increment direction
+            <select id="incrementDirection">
+              <option value="top_to_bottom">top_to_bottom</option>
+              <option value="bottom_to_top">bottom_to_top</option>
+              <option value="left_to_right">left_to_right</option>
+              <option value="right_to_left">right_to_left</option>
+            </select>
+          </label>
+        </div>
+        <div class="row">
+          <label>ON side
+            <select id="onSide">
+              <option value="left">left</option>
+              <option value="right">right</option>
+              <option value="top">top</option>
+              <option value="bottom">bottom</option>
+            </select>
+          </label>
+          <label>OFF side
+            <select id="offSide">
+              <option value="right">right</option>
+              <option value="left">left</option>
+              <option value="top">top</option>
+              <option value="bottom">bottom</option>
+            </select>
+          </label>
+        </div>
+        <div class="row">
+          <button id="generateDipTableBtn">Generate DIP Table</button>
+          <button id="autoSplitDipBtn">Auto-split switches</button>
+        </div>
+        <div id="dipTableContainer"></div>
+      </div>
+
+      <div class="row">
+        <button id="addRoiBtn">Add / Update ROI</button>
+        <button id="clearBtn">Clear Draft</button>
+      </div>
+      <div class="row">
+        <button id="deleteSelectedBtn">Delete Selected ROI</button>
+        <button id="fitBtn">Fit</button>
+      </div>
+      <div class="list"><h3>ROIs</h3><div id="roiList"></div></div>
+      <div class="list"><h3>Status</h3><pre id="statusLog" class="hint"></pre></div>
+    </div>
+    <div class="main">
+      <div class="toolbar">
+        <button id="zoomOutBtn">-</button>
+        <button id="zoomInBtn">+</button>
+        <button id="actualSizeBtn">100%</button>
+        <button id="fitToolbarBtn">Fit</button>
+        <button id="resetViewBtn">Reset</button>
+        <button id="panModeBtn">Pan: Off</button>
+        <div id="zoomLabel" class="toolbar-stat">Zoom: 100%</div>
+        <div id="coordLabel" class="toolbar-stat">x: -, y: -</div>
+        <div id="draftLabel" class="toolbar-stat">draft: -</div>
+        <div id="status" class="toolbar-stat warn">No image loaded</div>
+      </div>
+      <div class="canvas-wrap" id="canvasWrap">
+        <canvas id="canvas"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    const canvas = $('canvas');
+    const ctx = canvas.getContext('2d');
+    const canvasWrap = $('canvasWrap');
+    const statusEl = $('status');
+    const statusLog = $('statusLog');
+
+    const state = {
+      image: null,
+      imageName: null,
+      rois: [],
+      draft: null,
+      drawing: false,
+      start: null,
+      selectedRoiId: null,
+      editingBbox: null,
+      boards: [],
+      scale: 1,
+      offsetX: 0,
+      offsetY: 0,
+      panMode: false,
+      panning: false,
+      panStart: null,
+      panOrigin: null,
+    };
+
+    function backendUrl() {
+      const url = $('backendUrl').value.trim();
+      return url.endsWith('/') ? url.slice(0, -1) : url;
+    }
+
+    function logStatus(title, payload) {
+      const body = payload ? JSON.stringify(payload, null, 2) : '';
+      statusLog.textContent = title + (body ? '' + body : '');
+    }
+
+    function updateTypePanels() {
+      const type = $('roiType').value;
+      $('jumperPanel').style.display = (type === 'jumper_2pin' || type === 'jumper_3pin') ? 'block' : 'none';
+      $('dipPanel').style.display = type === 'dip_switch_group' ? 'block' : 'none';
+    }
+
+    function ensureDipTableRows() {
+      const count = Math.max(1, parseInt($('switchCount').value || '1', 10));
+      const container = $('dipTableContainer');
+      container.innerHTML = '';
+      const table = document.createElement('table');
+      const thead = document.createElement('thead');
+      thead.innerHTML = '<tr><th>Pos</th><th>Expected</th><th>Label</th></tr>';
+      table.appendChild(thead);
+      const tbody = document.createElement('tbody');
+      for (let i = 1; i <= count; i++) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = '<td>' + i + '</td>' +
+          '<td><select data-role="expected"><option value="ON">ON</option><option value="OFF">OFF</option></select></td>' +
+          '<td><input data-role="label" value="SW.' + i + '" /></td>';
+        tbody.appendChild(tr);
+      }
+      table.appendChild(tbody);
+      container.appendChild(table);
+    }
+
+    function getDipExpectedPositions() {
+      const result = {};
+      const rows = $('dipTableContainer').querySelectorAll('tbody tr');
+      rows.forEach((row, idx) => {
+        const expected = row.querySelector('[data-role="expected"]').value;
+        result[String(idx + 1)] = expected;
+      });
+      return result;
+    }
+
+    function getDipSwitchRegions(bbox, count, layout) {
+      const [x, y, w, h] = bbox;
+      const regions = [];
+      if (layout === 'single_row') {
+        const segW = w / count;
+        for (let i = 0; i < count; i++) {
+          regions.push({ index: i + 1, label: 'SW.' + (i + 1), reference_bbox: [Math.round(x + i * segW), y, Math.round(segW), h] });
+        }
+      } else {
+        const segH = h / count;
+        for (let i = 0; i < count; i++) {
+          regions.push({ index: i + 1, label: 'SW.' + (i + 1), reference_bbox: [x, Math.round(y + i * segH), w, Math.round(segH)] });
+        }
+      }
+      const rows = $('dipTableContainer').querySelectorAll('tbody tr');
+      rows.forEach((row, idx) => {
+        const labelInput = row.querySelector('[data-role="label"]');
+        if (regions[idx] && labelInput) regions[idx].label = labelInput.value.trim() || regions[idx].label;
+      });
+      return regions;
+    }
+
+    function updateToolbar() {
+      $('zoomLabel').textContent = 'Zoom: ' + Math.round(state.scale * 100) + '%';
+      const shown = state.draft || state.editingBbox;
+      $('draftLabel').textContent = shown ? ('draft: ' + shown.join(', ')) : 'draft: -';
+      $('panModeBtn').textContent = 'Pan: ' + (state.panMode ? 'On' : 'Off');
+    }
+
+    function screenToImage(clientX, clientY) {
+      const rect = canvas.getBoundingClientRect();
+      const sx = clientX - rect.left;
+      const sy = clientY - rect.top;
+      return { x: (sx - state.offsetX) / state.scale, y: (sy - state.offsetY) / state.scale };
+    }
+
+    function clampView() {
+      if (!state.image) return;
+      const scaledW = state.image.width * state.scale;
+      const scaledH = state.image.height * state.scale;
+      const wrapW = canvas.clientWidth;
+      const wrapH = canvas.clientHeight;
+      if (scaledW <= wrapW) state.offsetX = (wrapW - scaledW) / 2; else state.offsetX = Math.min(0, Math.max(wrapW - scaledW, state.offsetX));
+      if (scaledH <= wrapH) state.offsetY = (wrapH - scaledH) / 2; else state.offsetY = Math.min(0, Math.max(wrapH - scaledH, state.offsetY));
+    }
+
+    function setCanvasSize() {
+      const rect = canvasWrap.getBoundingClientRect();
+      canvas.width = Math.max(100, Math.floor(rect.width));
+      canvas.height = Math.max(100, Math.floor(rect.height));
+    }
+
+    function drawRect(bbox, color, label) {
+      const [x, y, w, h] = bbox;
+      ctx.strokeStyle = color;
+      ctx.lineWidth = Math.max(1 / state.scale, 2 / state.scale);
+      ctx.strokeRect(x, y, w, h);
+      ctx.fillStyle = color;
+      ctx.font = (16 / state.scale) + 'px Arial';
+      ctx.fillText(label, x + 2 / state.scale, Math.max(16 / state.scale, y - 4 / state.scale));
+    }
+
+    function render() {
+      setCanvasSize();
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.save();
+      if (state.image) {
+        clampView();
+        ctx.setTransform(state.scale, 0, 0, state.scale, state.offsetX, state.offsetY);
+        ctx.drawImage(state.image, 0, 0);
+        state.rois.forEach((roi) => {
+          drawRect(roi.reference_bbox, roi.roi_id === state.selectedRoiId ? '#ff66cc' : '#00ff88', roi.label || roi.roi_id);
+          if (roi.type === 'dip_switch_group' && Array.isArray(roi.switch_regions)) {
+            roi.switch_regions.forEach((r) => drawRect(r.reference_bbox, '#66ccff', String(r.index)));
+          }
+        });
+        if (state.editingBbox && !state.draft) drawRect(state.editingBbox, '#ffaa00', 'edit');
+      if (state.draft) drawRect(state.draft, '#ffd866', 'draft');
+      }
+      ctx.restore();
+      refreshRoiList();
+      updateToolbar();
+    }
+
+    function refreshRoiList() {
+      const roiList = $('roiList');
+      roiList.innerHTML = '';
+      state.rois.forEach((roi) => {
+        const div = document.createElement('div');
+        div.className = 'roi-item';
+        div.innerHTML = '<div><strong>' + roi.roi_id + '</strong> - ' + (roi.label || '') + '</div>' +
+          '<div class="hint">' + (roi.type || '') + ' | bbox=' + JSON.stringify(roi.reference_bbox) + '</div>' +
+          '<div class="row"><button data-action="select">Select</button><button data-action="delete">Delete</button></div>';
+        const buttons = div.querySelectorAll('button');
+        buttons[0].addEventListener('click', () => selectRoi(roi.roi_id));
+        buttons[1].addEventListener('click', () => deleteRoi(roi.roi_id));
+        roiList.appendChild(div);
+      });
+    }
+
+    function populateBoards(boards) {
+      state.boards = boards || [];
+      const select = $('boardSelect');
+      select.innerHTML = '<option value="">-- choose board --</option>';
+      state.boards.forEach((b) => {
+        const opt = document.createElement('option');
+        opt.value = b.board_id;
+        opt.textContent = b.board_id + (b.name ? ' - ' + b.name : '');
+        select.appendChild(opt);
+      });
+    }
+
+    function fillRoiForm(roi) {
+      $('roiId').value = roi.roi_id || '';
+      $('roiLabel').value = roi.label || '';
+      $('roiType').value = roi.type || 'generic_roi';
+      $('orientation').value = roi.orientation || 'unknown';
+      $('roiNotes').value = roi.notes || '';
+      $('detectionMethod').value = (roi.detection && roi.detection.method) || 'aligned_crop';
+      $('rotationInvariant').checked = !roi.detection || roi.detection.rotation_invariant !== false;
+      $('scaleInvariant').checked = !roi.detection || roi.detection.scale_invariant !== false;
+      updateTypePanels();
+
+      if (roi.type === 'jumper_2pin' || roi.type === 'jumper_3pin') {
+        $('pinScheme').value = (roi.pin_numbering && roi.pin_numbering.scheme) || 'left_to_right';
+        $('pin1Side').value = (roi.pin_numbering && roi.pin_numbering.pin1_side) || 'left';
+        $('jumperExpected').value = roi.expected_default || (roi.type === 'jumper_2pin' ? 'PRESENT' : '1-2');
+      }
+
+      if (roi.type === 'dip_switch_group') {
+        $('switchCount').value = roi.switch_count || 10;
+        $('dipLayout').value = roi.layout || 'single_column';
+        $('position1At').value = (roi.indexing && roi.indexing.position_1_at) || 'top';
+        $('incrementDirection').value = (roi.indexing && roi.indexing.increment_direction) || 'top_to_bottom';
+        $('onSide').value = (roi.state_semantics && roi.state_semantics.on_side) || 'left';
+        $('offSide').value = (roi.state_semantics && roi.state_semantics.off_side) || 'right';
+        ensureDipTableRows();
+        const rows = $('dipTableContainer').querySelectorAll('tbody tr');
+        rows.forEach((row, idx) => {
+          const key = String(idx + 1);
+          if (roi.expected_positions && roi.expected_positions[key]) row.querySelector('[data-role="expected"]').value = roi.expected_positions[key];
+          if (roi.switch_regions && roi.switch_regions[idx]) row.querySelector('[data-role="label"]').value = roi.switch_regions[idx].label || ('SW.' + key);
+        });
+      }
+    }
+
+    function selectRoi(roiId) {
+      const roi = state.rois.find(r => r.roi_id === roiId);
+      if (!roi) return;
+      state.selectedRoiId = roiId;
+      state.draft = roi.reference_bbox.slice();
+      state.editingBbox = Array.isArray(roi.reference_bbox) ? roi.reference_bbox.slice() : null;
+      state.draft = null;
+      fillRoiForm(roi);
+      render();
+    }
+
+    function deleteRoi(roiId) {
+      state.rois = state.rois.filter(r => r.roi_id !== roiId);
+      if (state.selectedRoiId === roiId) state.selectedRoiId = null;
+      render();
+    }
+
+    function fitToScreen() {
+      if (!state.image) return;
+      setCanvasSize();
+      const scaleX = canvas.width / state.image.width;
+      const scaleY = canvas.height / state.image.height;
+      state.scale = Math.min(scaleX, scaleY);
+      const scaledW = state.image.width * state.scale;
+      const scaledH = state.image.height * state.scale;
+      state.offsetX = (canvas.width - scaledW) / 2;
+      state.offsetY = (canvas.height - scaledH) / 2;
+      render();
+    }
+
+    function setActualSize() { if (!state.image) return; state.scale = 1; state.offsetX = 0; state.offsetY = 0; clampView(); render(); }
+    function resetView() { fitToScreen(); }
+
+    function zoomAt(factor, clientX, clientY) {
+      if (!state.image) return;
+      const before = screenToImage(clientX, clientY);
+      state.scale = Math.max(0.05, Math.min(20, state.scale * factor));
+      const rect = canvas.getBoundingClientRect();
+      const sx = clientX - rect.left;
+      const sy = clientY - rect.top;
+      state.offsetX = sx - before.x * state.scale;
+      state.offsetY = sy - before.y * state.scale;
+      clampView();
+      render();
+    }
+
+    function setImageFromUrl(url) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => { state.image = img; state.imageName = url.split('/').pop(); statusEl.textContent = 'Image loaded'; statusEl.className = 'toolbar-stat ok'; fitToScreen(); resolve(true); };
+        img.onerror = () => reject(new Error('Failed to load image: ' + url));
+        img.src = url + (url.includes('?') ? '&' : '?') + 't=' + Date.now();
+      });
+    }
+
+    async function apiGet(path) {
+      const res = await fetch(backendUrl() + path);
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.detail || 'Request failed');
+      return data;
+    }
+
+    async function apiPost(path, payload) {
+      const res = await fetch(backendUrl() + path, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
+      const text = await res.text();
+      let data = {};
+      try { data = text ? JSON.parse(text) : {}; } catch (_) { data = { raw: text }; }
+      let errorText = 'Request failed';
+      if (data && data.detail) errorText = typeof data.detail === 'string' ? data.detail : JSON.stringify(data.detail);
+      else if (data && data.raw) errorText = data.raw;
+      if (!res.ok) throw new Error(errorText);
+      return data;
+    }
+
+    async function loadBoards() {
+      const data = await apiGet('/api/boards');
+      populateBoards(data.boards || []);
+      logStatus('Boards loaded', data);
+    }
+
+    async function loadBoard(boardId) {
+      const data = await apiGet('/api/boards/' + encodeURIComponent(boardId));
+      $('boardId').value = data.board_id || boardId;
+      $('boardName').value = data.name || boardId;
+      $('referenceImagePath').value = data.reference_image_path || data.reference_image || '';
+      state.rois = (data.rois || []).map(item => item.roi ? item.roi : item);
+      state.selectedRoiId = null;
+      state.editingBbox = null;
+      state.draft = null;
+      if (data.reference_image_url) await setImageFromUrl(backendUrl() + data.reference_image_url); else { state.image = null; render(); }
+      $('boardSelect').value = data.board_id || boardId;
+      render();
+      logStatus('Board loaded', data);
+    }
+
+    function buildSemanticRoi() {
+      const type = $('roiType').value;
+      const currentBbox = state.editingBbox || state.draft || [0,0,0,0];
+      const roi = {
+        schema_version: '1.0',
+        roi_id: $('roiId').value.trim(),
+        label: $('roiLabel').value.trim(),
+        type,
+        reference_bbox: currentBbox.slice(),
+        orientation: $('orientation').value,
+        notes: $('roiNotes').value.trim(),
+        detection: {
+          method: $('detectionMethod').value.trim() || 'aligned_crop',
+          rotation_invariant: $('rotationInvariant').checked,
+          scale_invariant: $('scaleInvariant').checked,
+        }
+      };
+
+      if (type === 'jumper_2pin') {
+        roi.pin_numbering = { scheme: $('pinScheme').value, pins: [1,2], pin1_side: $('pin1Side').value };
+        roi.allowed_states = ['PRESENT', 'ABSENT'];
+        roi.expected_default = $('jumperExpected').value === 'ABSENT' ? 'ABSENT' : 'PRESENT';
+      } else if (type === 'jumper_3pin') {
+        roi.pin_numbering = { scheme: $('pinScheme').value, pins: [1,2,3], pin1_side: $('pin1Side').value };
+        roi.allowed_states = ['1-2', '2-3', 'ABSENT'];
+        roi.expected_default = $('jumperExpected').value;
+      } else if (type === 'dip_switch_group') {
+        const count = Math.max(1, parseInt($('switchCount').value || '1', 10));
+        const layout = $('dipLayout').value;
+        roi.switch_count = count;
+        roi.layout = layout;
+        roi.indexing = {
+          position_1_at: $('position1At').value,
+          increment_direction: $('incrementDirection').value,
+        };
+        roi.state_semantics = {
+          on_side: $('onSide').value,
+          off_side: $('offSide').value,
+        };
+        roi.allowed_states = ['ON', 'OFF'];
+        roi.expected_positions = getDipExpectedPositions();
+        roi.switch_regions = getDipSwitchRegions(roi.reference_bbox, count, layout);
+        roi.detection.classification_mode = 'per_switch';
+      }
+      return roi;
+    }
+
+    $('checkBackendBtn').addEventListener('click', async () => { try { const data = await apiGet('/api/health'); logStatus('Backend check OK', data); } catch (err) { logStatus('Backend check failed', { error: String(err) }); } });
+    $('refreshBoardsBtn').addEventListener('click', async () => { try { await loadBoards(); } catch (err) { logStatus('Load boards failed', { error: String(err) }); } });
+    $('loadSelectedBtn').addEventListener('click', async () => { const id = $('boardSelect').value; if (!id) return; try { await loadBoard(id); } catch (err) { logStatus('Load selected failed', { error: String(err) }); } });
+    $('reloadBoardBtn').addEventListener('click', async () => { const id = $('boardId').value.trim(); if (!id) return; try { await loadBoard(id); } catch (err) { logStatus('Reload failed', { error: String(err) }); } });
+    $('loadBoardBtn').addEventListener('click', async () => { const id = $('boardId').value.trim(); if (!id) return; try { await loadBoard(id); } catch (err) { logStatus('Load board failed', { error: String(err) }); } });
+    $('boardSelect').addEventListener('change', () => { const id = $('boardSelect').value; const board = state.boards.find(b => b.board_id === id); $('boardId').value = id || ''; if (board) $('boardName').value = board.name || id; });
+    $('exportTemplateBtn').addEventListener('click', async () => { try { const boardId = $('boardId').value.trim(); const data = await apiPost('/api/boards/' + encodeURIComponent(boardId) + '/export-template', {}); logStatus('Template exported', data); } catch (err) { logStatus('Export failed', { error: String(err) }); } });
+    $('roiType').addEventListener('change', updateTypePanels);
+    $('generateDipTableBtn').addEventListener('click', ensureDipTableRows);
+    $('autoSplitDipBtn').addEventListener('click', () => { if (!state.draft) return alert('Draw a DIP group ROI first'); const count = Math.max(1, parseInt($('switchCount').value || '1', 10)); const layout = $('dipLayout').value; const regions = getDipSwitchRegions(state.draft, count, layout); logStatus('Auto-split switch regions', regions); render(); });
+
+    $('imageInput').addEventListener('change', (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      const img = new Image();
+      img.onload = () => { state.image = img; state.imageName = file.name; statusEl.textContent = 'Preview image loaded'; statusEl.className = 'toolbar-stat ok'; fitToScreen(); };
+      img.src = URL.createObjectURL(file);
+    });
+
+    canvas.addEventListener('wheel', (e) => { if (!state.image) return; e.preventDefault(); zoomAt(e.deltaY < 0 ? 1.1 : 1/1.1, e.clientX, e.clientY); }, { passive: false });
+    canvas.addEventListener('mousedown', (e) => {
+      if (!state.image) return;
+      if (state.panMode || e.button === 1 || e.button === 2 || e.shiftKey) {
+        state.panning = true; state.panStart = { x: e.clientX, y: e.clientY }; state.panOrigin = { x: state.offsetX, y: state.offsetY }; return;
+      }
+      const pt = screenToImage(e.clientX, e.clientY);
+      state.drawing = true; state.start = { x: Math.round(pt.x), y: Math.round(pt.y) }; state.draft = [state.start.x, state.start.y, 0, 0]; render();
+    });
+    canvas.addEventListener('mousemove', (e) => {
+      if (!state.image) return;
+      const pt = screenToImage(e.clientX, e.clientY);
+      $('coordLabel').textContent = 'x: ' + Math.round(pt.x) + ', y: ' + Math.round(pt.y);
+      if (state.panning && state.panStart && state.panOrigin) { state.offsetX = state.panOrigin.x + (e.clientX - state.panStart.x); state.offsetY = state.panOrigin.y + (e.clientY - state.panStart.y); render(); return; }
+      if (!state.drawing || !state.start) return;
+      const x = Math.round(pt.x), y = Math.round(pt.y);
+      const x0 = Math.min(state.start.x, x), y0 = Math.min(state.start.y, y);
+      state.draft = [x0, y0, Math.abs(x - state.start.x), Math.abs(y - state.start.y)]; render();
+    });
+    canvas.addEventListener('mouseup', () => { state.drawing = false; state.panning = false; });
+    canvas.addEventListener('mouseleave', () => { state.drawing = false; state.panning = false; });
+    canvas.addEventListener('contextmenu', (e) => e.preventDefault());
+
+    $('addRoiBtn').addEventListener('click', () => {
+      const activeBbox = state.draft || state.editingBbox;
+      if (!activeBbox) return alert('Draw a ROI first or select an ROI to edit');
+      state.editingBbox = activeBbox.slice();
+      const roi = buildSemanticRoi();
+      roi.reference_bbox = state.editingBbox.slice();
+      const idx = state.rois.findIndex(r => r.roi_id === roi.roi_id);
+      if (idx >= 0) state.rois[idx] = roi; else state.rois.push(roi);
+      state.selectedRoiId = roi.roi_id;
+      state.draft = null;
+      state.editingBbox = roi.reference_bbox.slice();
+      render();
+    });
+
+    $('clearBtn').addEventListener('click', () => { state.draft = null; state.selectedRoiId = null; render(); });
+    $('deleteSelectedBtn').addEventListener('click', () => { if (state.selectedRoiId) deleteRoi(state.selectedRoiId); });
+    $('fitBtn').addEventListener('click', fitToScreen);
+    $('fitToolbarBtn').addEventListener('click', fitToScreen);
+    $('actualSizeBtn').addEventListener('click', setActualSize);
+    $('resetViewBtn').addEventListener('click', resetView);
+    $('zoomInBtn').addEventListener('click', () => zoomAt(1.2, canvas.getBoundingClientRect().left + canvas.width / 2, canvas.getBoundingClientRect().top + canvas.height / 2));
+    $('zoomOutBtn').addEventListener('click', () => zoomAt(1 / 1.2, canvas.getBoundingClientRect().left + canvas.width / 2, canvas.getBoundingClientRect().top + canvas.height / 2));
+    $('panModeBtn').addEventListener('click', () => { state.panMode = !state.panMode; updateToolbar(); });
+
+    $('saveBoardBtn').addEventListener('click', async () => {
+      try {
+        const payload = {
+          board_id: $('boardId').value.trim(),
+          name: $('boardName').value.trim(),
+          reference_image_path: $('referenceImagePath').value.trim(),
+          rois: state.rois,
+        };
+        logStatus('Save payload', payload);
+        const data = await apiPost('/api/boards/save', payload);
+        logStatus('Board saved', data);
+        await loadBoards();
+      } catch (err) {
+        logStatus('Save failed', { error: String(err) });
+      }
+    });
+
+    window.addEventListener('resize', () => render());
+    updateTypePanels();
+    ensureDipTableRows();
+    updateToolbar();
+    setCanvasSize();
+  </script>
+</body>
+</html>
+

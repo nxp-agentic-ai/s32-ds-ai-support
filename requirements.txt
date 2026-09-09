@@ -1,0 +1,17 @@
+# Install all sub-packages as editable installs.
+# This registers their entry-points in the Python environment so that
+# mcp_gateway can discover servers dynamically via importlib.metadata.
+-e packages/mcp_shared
+-e packages/mcp_gateway
+-e packages/mcp_knowledge
+-e packages/mcp_freemaster
+-e packages/mcp_compiler
+-e packages/mcp_s32ct
+-e packages/mcp_s32debugger
+-e packages/mcp_s32ds
+-e packages/mcp_s32flashtool
+-e packages/mcp_s32sdaf
+-e packages/mcp_s32trace
+
+# Build tools
+build

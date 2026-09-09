@@ -1,0 +1,16 @@
+logging:
+  level: INFO
+  timestamp_format: "%Y-%m-%d %H:%M:%S"
+  format: "%(asctime)s [%(name)s] %(levelname)s %(message)s"
+  file: ../.tmp/logs/compiler.log
+
+settings:
+  # Optional - leave empty to auto-discover from:
+  #   C:/NXP/S32DS/S32DS/build_tools
+  #   C:/Users/<user>/S32DS/S32DS/build_tools
+  #
+  # Set explicitly if installed elsewhere:
+  #   toolchain_path: "C:/custom/path/S32DS/S32DS/build_tools"
+  toolchain_path: ""
+
+skills: ../skills/compiler

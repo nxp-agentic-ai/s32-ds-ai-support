@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=81", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nxp-mcp-shared"
+version = "1.0.0"
+description = "Shared infrastructure for MCP monorepo (config, bootstrap, models, action protocol)"
+requires-python = ">=3.11"
+dependencies = [
+  "fastmcp==3.3.1",
+  "jsonschema==4.25.0",
+  "pyyaml==6.0.3",
+]
+
+[tool.setuptools]
+package-dir = {"nxp.mcp.shared" = "src"}
+
+packages = [
+  "nxp.mcp.shared",
+  "nxp.mcp.shared.action",
+  "nxp.mcp.shared.action.search",
+  "nxp.mcp.shared.bootstrap",
+  "nxp.mcp.shared.config",
+  "nxp.mcp.shared.models",
+  "nxp.mcp.shared.rpc",
+]

@@ -1,0 +1,160 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://board-config-mcp/schemas/roi.schema.json",
+  "title": "Semantic ROI Definition",
+  "oneOf": [
+    { "$ref": "#/$defs/jumper2pin" },
+    { "$ref": "#/$defs/jumper3pin" },
+    { "$ref": "#/$defs/dipSwitchGroup" },
+    { "$ref": "#/$defs/genericRoi" }
+  ],
+  "$defs": {
+    "bbox": {
+      "type": "array",
+      "items": { "type": "integer" },
+      "minItems": 4,
+      "maxItems": 4
+    },
+    "common": {
+      "type": "object",
+      "required": ["schema_version", "roi_id", "label", "type", "reference_bbox", "orientation", "detection"],
+      "properties": {
+        "schema_version": { "type": "string" },
+        "roi_id": { "type": "string" },
+        "label": { "type": "string" },
+        "type": { "type": "string" },
+        "reference_bbox": { "$ref": "#/$defs/bbox" },
+        "reference_image": { "type": "string" },
+        "orientation": { "type": "string", "enum": ["horizontal", "vertical", "unknown"] },
+        "component_family": { "type": "string" },
+        "notes": { "type": "string" },
+        "markings": { "type": "object" },
+        "detection": {
+          "type": "object",
+          "required": ["method", "rotation_invariant", "scale_invariant"],
+          "properties": {
+            "method": { "type": "string" },
+            "rotation_invariant": { "type": "boolean" },
+            "scale_invariant": { "type": "boolean" },
+            "classification_mode": { "type": "string" }
+          }
+        }
+      }
+    },
+    "genericRoi": {
+      "allOf": [
+        { "$ref": "#/$defs/common" },
+        {
+          "properties": {
+            "type": { "const": "generic_roi" }
+          }
+        }
+      ]
+    },
+    "jumper2pin": {
+      "allOf": [
+        { "$ref": "#/$defs/common" },
+        {
+          "required": ["pin_numbering", "allowed_states"],
+          "properties": {
+            "type": { "const": "jumper_2pin" },
+            "pin_numbering": {
+              "type": "object",
+              "required": ["scheme", "pins", "pin1_side"],
+              "properties": {
+                "scheme": { "type": "string", "enum": ["left_to_right", "right_to_left", "top_to_bottom", "bottom_to_top"] },
+                "pins": { "type": "array", "items": { "type": "integer" }, "minItems": 2, "maxItems": 2 },
+                "pin1_side": { "type": "string", "enum": ["left", "right", "top", "bottom"] }
+              }
+            },
+            "allowed_states": {
+              "type": "array",
+              "items": { "type": "string", "enum": ["PRESENT", "ABSENT"] }
+            },
+            "expected_default": { "type": "string" },
+            "state_semantics": { "type": "object" }
+          }
+        }
+      ]
+    },
+    "jumper3pin": {
+      "allOf": [
+        { "$ref": "#/$defs/common" },
+        {
+          "required": ["pin_numbering", "allowed_states"],
+          "properties": {
+            "type": { "const": "jumper_3pin" },
+            "pin_numbering": {
+              "type": "object",
+              "required": ["scheme", "pins", "pin1_side"],
+              "properties": {
+                "scheme": { "type": "string", "enum": ["left_to_right", "right_to_left", "top_to_bottom", "bottom_to_top"] },
+                "pins": { "type": "array", "items": { "type": "integer" }, "minItems": 3, "maxItems": 3 },
+                "pin1_side": { "type": "string", "enum": ["left", "right", "top", "bottom"] }
+              }
+            },
+            "allowed_states": {
+              "type": "array",
+              "items": { "type": "string", "enum": ["1-2", "2-3", "ABSENT"] }
+            },
+            "expected_default": { "type": "string" },
+            "state_semantics": { "type": "object" },
+            "subregions": {
+              "type": "object",
+              "additionalProperties": { "$ref": "#/$defs/bbox" }
+            }
+          }
+        }
+      ]
+    },
+    "dipSwitchGroup": {
+      "allOf": [
+        { "$ref": "#/$defs/common" },
+        {
+          "required": ["switch_count", "layout", "indexing", "state_semantics", "allowed_states"],
+          "properties": {
+            "type": { "const": "dip_switch_group" },
+            "switch_count": { "type": "integer", "minimum": 1 },
+            "layout": { "type": "string", "enum": ["single_row", "single_column"] },
+            "indexing": {
+              "type": "object",
+              "required": ["position_1_at", "increment_direction"],
+              "properties": {
+                "position_1_at": { "type": "string", "enum": ["left", "right", "top", "bottom"] },
+                "increment_direction": { "type": "string", "enum": ["left_to_right", "right_to_left", "top_to_bottom", "bottom_to_top"] }
+              }
+            },
+            "state_semantics": {
+              "type": "object",
+              "required": ["on_side"],
+              "properties": {
+                "on_side": { "type": "string", "enum": ["left", "right", "top", "bottom"] },
+                "off_side": { "type": "string", "enum": ["left", "right", "top", "bottom"] }
+              }
+            },
+            "allowed_states": {
+              "type": "array",
+              "items": { "type": "string", "enum": ["ON", "OFF"] }
+            },
+            "expected_positions": {
+              "type": "object",
+              "additionalProperties": { "type": "string", "enum": ["ON", "OFF"] }
+            },
+            "switch_regions": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["index", "label", "reference_bbox"],
+                "properties": {
+                  "index": { "type": "integer", "minimum": 1 },
+                  "label": { "type": "string" },
+                  "reference_bbox": { "$ref": "#/$defs/bbox" }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
